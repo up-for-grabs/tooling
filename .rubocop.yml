@@ -1,0 +1,18 @@
+AllCops:
+  Include:
+    - 'lib/**/*.rb'
+
+Metrics/CyclomaticComplexity:
+  Max: 9
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Metrics/LineLength:
+  Max: 186
+
+Metrics/AbcSize:
+  Max: 66
+
+Metrics/MethodLength:
+  Max: 59
