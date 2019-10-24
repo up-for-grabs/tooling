@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'up-for-grabs-tooling'
+  s.name        = 'up_for_grabs_tooling'
   s.version     = '0.0.1'
   s.licenses    = ['MIT']
   s.summary     = "Tooling for Up-For-Grabs infrastructure"
