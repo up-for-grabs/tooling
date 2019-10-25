@@ -2,7 +2,8 @@
 
 source 'https://rubygems.org'
 
-gem 'minitest'
+gem 'minitest', group: :test
+gem 'simplecov', require: false, group: :test
 
 gem 'rubocop', require: false
 gem 'rake', require: false
