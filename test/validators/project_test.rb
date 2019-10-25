@@ -21,6 +21,15 @@ class ProjectValidatorTests < Minitest::Test
     assert_equal result[0], 'Unable to parse the contents of file - Line: 1, Offset: 0, Problem: found unknown escape character'
   end
 
+  def test_missing_file
+    schemer = setup_schemer
+    project = get_project('file_not_found.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert result[0].start_with?('Unknown exception for file: No such file or directory')
+  end
+
   def test_upper_case_tag_error
     schemer = setup_schemer
     project = get_project('error_upper_case_tag.yml')
@@ -46,6 +55,24 @@ class ProjectValidatorTests < Minitest::Test
     result = ProjectValidator.validate(project, schemer)
 
     assert_equal result[0], "Field '/upforgrabs/link' expects a URL but instead found 'not-a-url'. Please check and update this value."
+  end
+
+  def test_stats_negative_issue_count_error
+    schemer = setup_schemer
+    project = get_project('error_stats_negative_issue_count.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], "Field '/stats/issue-count' expects a non-negative integer but instead found '-1'. Please check and update this value."
+  end
+
+  def test_stats_invalid_last_updated_error
+    schemer = setup_schemer
+    project = get_project('error_stats_invalid_last_updated.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], "Field '/stats/last-updated' expects date-time string but instead found '18 December 2019'. Please check and update this value."
   end
 
   def setup_schemer
