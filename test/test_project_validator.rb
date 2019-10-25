@@ -11,6 +11,15 @@ class ProjectValidatorTests < Minitest::Test
     assert result.empty?
   end
 
+  def test_upper_case_tag_error
+    schemer = get_schemer
+    project = get_project("error_upper_case_tag.yml")
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], "Tag 'Web' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -"
+  end
+
   def get_schemer
     root = File.dirname(__dir__)
     schema = Pathname.new("#{root}/schema.json")
