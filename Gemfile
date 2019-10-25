@@ -6,3 +6,5 @@ gem 'minitest'
 
 gem 'rubocop', require: false
 gem 'rake', require: false
+
+gemspec
