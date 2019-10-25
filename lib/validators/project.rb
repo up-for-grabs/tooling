@@ -10,8 +10,8 @@ class ProjectValidator
       yaml = project.read_yaml
     rescue Psych::SyntaxError => e
       errors << "Unable to parse the contents of file - Line: #{e.line}, Offset: #{e.offset}, Problem: #{e.problem}"
-    rescue StandardError
-      errors << "Unknown exception for file: #{$ERROR_INFO}"
+    rescue StandardError => e
+      errors << "Unknown exception for file: #{e}"
     end
 
     # don't continue if there was a problem parsing
