@@ -30,6 +30,15 @@ class ProjectValidatorTests < Minitest::Test
     assert result[0].start_with?('Unknown exception for file: No such file or directory')
   end
 
+  def test_missing_file
+    schemer = setup_schemer
+    project = get_project('error_required_fields.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], "Required fields are missing from file: name, link. Please check the example on the README and add these values."
+  end
+
   def test_upper_case_tag_error
     schemer = setup_schemer
     project = get_project('error_upper_case_tag.yml')

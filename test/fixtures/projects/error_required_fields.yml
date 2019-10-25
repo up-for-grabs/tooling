@@ -1,0 +1,8 @@
+---
+name: Up-For-Grabs.net
+desc: This site!
+site: https://github.com/up-for-grabs/up-for-grabs.net
+tags:
+- web
+upforgrabs:
+  foo: bar
