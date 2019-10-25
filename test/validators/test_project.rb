@@ -13,11 +13,20 @@ class ProjectValidatorTests < Minitest::Test
 
   def test_upper_case_tag_error
     schemer = get_schemer
-    project = get_project("error_upper_case_tag.yml")
+    project = get_project('error_upper_case_tag.yml')
 
     result = ProjectValidator.validate(project, schemer)
 
     assert_equal result[0], "Tag 'Web' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -"
+  end
+
+  def test_parsing_error
+    schemer = get_schemer
+    project = get_project('error_parsing.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], 'Unable to parse the contents of file - Line: 1, Offset: 0, Problem: found unknown escape character'
   end
 
   def get_schemer
