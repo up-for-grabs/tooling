@@ -2,6 +2,7 @@ AllCops:
   Include:
     - 'lib/**/*.rb'
     - 'test/**/*.rb'
+    - 'Rakefile'
 
 Metrics/CyclomaticComplexity:
   Max: 9

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
-require './lib/up_for_grabs_tooling'
+require_relative '../test_helper'
 
 class ProjectValidatorTests < Minitest::Test
   def test_valid_file_returns_no_errors
@@ -46,7 +45,7 @@ class ProjectValidatorTests < Minitest::Test
 
     result = ProjectValidator.validate(project, schemer)
 
-    assert_equal result[0],  "Field '/upforgrabs/link' expects a URL but instead found 'not-a-url'. Please check and update this value."
+    assert_equal result[0], "Field '/upforgrabs/link' expects a URL but instead found 'not-a-url'. Please check and update this value."
   end
 
   def setup_schemer
