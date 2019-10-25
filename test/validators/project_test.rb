@@ -84,6 +84,52 @@ class ProjectValidatorTests < Minitest::Test
     assert_equal result[0], "Field '/stats/last-updated' expects date-time string but instead found '18 December 2019'. Please check and update this value."
   end
 
+  def test_no_tags_error
+    schemer = setup_schemer
+    project = get_project('error_no_tags.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], 'Required fields are missing from file: tags. Please check the example on the README and add these values.'
+  end
+
+  def test_empty_tags_error
+    schemer = setup_schemer
+    project = get_project('error_empty_tags.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], "Field 'tags' needs to be an array of elements. Check the file and try again."
+  end
+
+  def test_tags_as_string_error
+    schemer = setup_schemer
+    project = get_project('error_tags_as_string.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], "Field 'tags' needs to be an array of elements. Check the file and try again."
+    assert_equal result[1], "Expected array for tags but found value 'hello'"
+  end
+
+  def test_duplicate_tag_error
+    schemer = setup_schemer
+    project = get_project('error_duplicate_tags.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], 'Duplicate tags found: javascript'
+  end
+
+  def test_recommended_tag_error
+    schemer = setup_schemer
+    project = get_project('error_recommended_tag.yml')
+
+    result = ProjectValidator.validate(project, schemer)
+
+    assert_equal result[0], "Rename tag 'js' to be'javascript'"
+  end
+
   def setup_schemer
     root = File.dirname(File.dirname(__dir__))
     schema = Pathname.new("#{root}/schema.json")

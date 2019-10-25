@@ -1,0 +1,9 @@
+---
+name: Up-For-Grabs.net
+desc: This site!
+site: https://github.com/up-for-grabs/up-for-grabs.net
+tags:
+- js
+upforgrabs:
+  name: up-for-grabs
+  link: https://github.com/up-for-grabs/up-for-grabs.net/labels/up-for-grabs

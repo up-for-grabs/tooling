@@ -46,6 +46,8 @@ class ProjectValidator
       details = err.fetch('details')
       keys = details['missing_keys']
       "Required fields are missing from file: #{keys.join(', ')}. Please check the example on the README and add these values."
+    elsif field.start_with?('/tags')
+      "Field 'tags' needs to be an array of elements. Check the file and try again."
     else
       "Field '#{field}' with value '#{value}' failed to satisfy the rule '#{type}'. Check the value and try again."
     end
@@ -102,7 +104,9 @@ class ProjectValidator
 
     tags = yaml['tags']
 
-    errors << 'No tags defined for file' if tags.nil? || tags.empty?
+    return ['No tags defined for file'] if tags.nil? || tags.empty?
+
+    return ["Expected array for tags but found value '#{tags}'"] unless tags.is_a?(Array)
 
     errors.concat(validate_preferred_tags(tags))
 
