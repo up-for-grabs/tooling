@@ -21,13 +21,14 @@ class ProjectValidatorTests < Minitest::Test
   end
 
   def get_schemer
-    root = File.dirname(__dir__)
+    root = File.dirname(File.dirname(__dir__))
     schema = Pathname.new("#{root}/schema.json")
     JSONSchemer.schema(schema)
   end
 
   def get_project(name)
-    full_path =  Pathname.new("#{__dir__}/fixtures/projects/#{name}")
+    parent = File.dirname(__dir__)
+    full_path =  Pathname.new("#{parent}/fixtures/projects/#{name}")
     Project.new(name, full_path.to_s)
   end
 end
