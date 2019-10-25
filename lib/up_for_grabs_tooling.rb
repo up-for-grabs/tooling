@@ -2,6 +2,7 @@
 
 require 'safe_yaml'
 require 'find'
+require 'json_schemer'
 
 require 'models/project_with_stats'
 require 'models/project'
