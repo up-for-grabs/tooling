@@ -2,8 +2,7 @@
 
 # Check the projects directory for anything invalid
 class DirectoryValidator
-
-  VALID_YAML_FILES = ['_config.yml', 'docker-compose.yml', '.rubocop.yml']
+  VALID_YAML_FILES = ['_config.yml', 'docker-compose.yml', '.rubocop.yml'].freeze
 
   def self.validate(root)
     invalid_data_files = []
