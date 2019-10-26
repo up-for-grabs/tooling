@@ -17,16 +17,6 @@ class DataFilesValidator
       projects_with_errors << [p.relative_path, validation_errors] unless validation_errors.empty?
     end
 
-    # if projects_with_errors.any?
-    #   puts "#{projects_with_errors.count} errors found processing projects:"
-    #   projects_with_errors.each do |project, errors|
-    #     puts " - #{project.relative_path}:"
-    #     errors.each { |error| puts "    - #{error}" }
-    #   end
-    # else
-    #   puts "#{projects_without_issues.count} files processed - no errors found!"
-    # end
-
     {
       count: projects.count,
       errors: projects_with_errors
