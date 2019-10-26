@@ -8,8 +8,8 @@ class DirectoryValidatorTests < Minitest::Test
 
     result = DirectoryValidator.validate(path)
 
-    assert_equal ["_data/projects/thing.json"], result[:invalid_data_files]
-    assert_equal ["lost_project_file.yml"], result[:project_files_at_root]
+    assert_equal ['_data/projects/thing.json'], result[:invalid_data_files]
+    assert_equal ['lost_project_file.yml'], result[:project_files_at_root]
   end
 
   def get_directory(name)

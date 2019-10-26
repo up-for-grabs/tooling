@@ -5,7 +5,7 @@ class DirectoryValidator
   def self.validate(root)
     invalid_data_files = []
 
-    projects_dir = File.join(root, "_data", "projects")
+    projects_dir = File.join(root, '_data', 'projects')
 
     Find.find(projects_dir) do |path|
       next unless FileTest.file?(path)
@@ -16,8 +16,6 @@ class DirectoryValidator
     end
 
     project_files_at_root = []
-
-    normalized_root_path = Pathname.new(root)
 
     valid_yaml_files = ['_config.yml', 'docker-compose.yml', '.rubocop.yml']
 
@@ -37,7 +35,7 @@ class DirectoryValidator
 
     {
       project_files_at_root: project_files_at_root,
-      invalid_data_files: invalid_data_files,
+      invalid_data_files: invalid_data_files
     }
   end
 end
