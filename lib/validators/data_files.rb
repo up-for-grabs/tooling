@@ -4,8 +4,8 @@ require_relative 'project'
 
 # Validate the data files
 class DataFilesValidator
-  def self.check(root, schemer)
-    projects = Dir["#{root}/_data/projects/*.yml"].map do |f|
+  def self.validate(root, schemer)
+    projects = Dir["#{root}/*.yml"].map do |f|
       relative_path = Pathname.new(f).relative_path_from(root).to_s
       Project.new(relative_path, f)
     end
@@ -22,15 +22,19 @@ class DataFilesValidator
       end
     end
 
-    if projects_with_errors.any?
-      puts "#{projects_with_errors.count} errors found processing projects:"
-      projects_with_errors.each do |project, errors|
-        puts " - #{project.relative_path}:"
-        errors.each { |error| puts "    - #{error}" }
-      end
-      exit(-1)
-    else
-      puts "#{projects_without_issues.count} files processed - no errors found!"
-    end
+    # if projects_with_errors.any?
+    #   puts "#{projects_with_errors.count} errors found processing projects:"
+    #   projects_with_errors.each do |project, errors|
+    #     puts " - #{project.relative_path}:"
+    #     errors.each { |error| puts "    - #{error}" }
+    #   end
+    # else
+    #   puts "#{projects_without_issues.count} files processed - no errors found!"
+    # end
+
+    {
+      count: projects.count,
+      errors: projects_with_errors
+    }
   end
 end
