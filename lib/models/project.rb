@@ -14,7 +14,7 @@ class Project
   end
 
   def read_yaml
-    YAML.safe_load(File.read(@full_path))
+    SafeYAML.load(File.read(@full_path))
   end
 
   def write_yaml(obj)
