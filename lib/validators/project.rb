@@ -106,7 +106,9 @@ class ProjectValidator
 
     return ['No tags defined for file'] if tags.nil? || tags.empty?
 
-    return ["Expected array for tags but found value '#{tags}'"] unless tags.is_a?(Array)
+    unless tags.is_a?(Array)
+      return ["Expected array for tags but found value '#{tags}'"]
+    end
 
     errors.concat(validate_preferred_tags(tags))
 

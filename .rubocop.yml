@@ -5,16 +5,18 @@ AllCops:
     - 'Rakefile'
 
 Metrics/CyclomaticComplexity:
-  Max: 9
+  Max: 8
 
 Metrics/PerceivedComplexity:
   Max: 9
 
 Metrics/LineLength:
-  Max: 186
+  Exclude:
+    - 'lib/**/*.rb'
+    - 'test/**/*.rb'
 
 Metrics/AbcSize:
-  Max: 66
+  Max: 20
 
 Metrics/MethodLength:
-  Max: 59
+  Max: 21
