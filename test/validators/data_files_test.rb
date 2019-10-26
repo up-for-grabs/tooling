@@ -22,8 +22,7 @@ class DataFilesValidatorTests < Minitest::Test
     assert_equal 2, result[:count]
     assert_equal 1, result[:errors].length
 
-    key, errors = result[:errors][0]
-    assert_equal key, '_data/projects/error_site_link_url.yml'
+    errors = result[:errors]['_data/projects/error_site_link_url.yml']
     assert_equal 1, errors.length
     assert_equal errors[0], "Field '/site' expects a URL but instead found 'foo'. Please check and update this value."
   end
