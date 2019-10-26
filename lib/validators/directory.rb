@@ -2,6 +2,9 @@
 
 # Check the projects directory for anything invalid
 class DirectoryValidator
+
+  VALID_YAML_FILES = ['_config.yml', 'docker-compose.yml', '.rubocop.yml']
+
   def self.validate(root)
     invalid_data_files = []
 
@@ -17,8 +20,6 @@ class DirectoryValidator
 
     project_files_at_root = []
 
-    valid_yaml_files = ['_config.yml', 'docker-compose.yml', '.rubocop.yml']
-
     Find.find(root) do |path|
       next unless FileTest.file?(path)
 
@@ -28,7 +29,7 @@ class DirectoryValidator
       next unless normalized_dirname == root
 
       basename = File.basename(path)
-      next if valid_yaml_files.include?(basename)
+      next if VALID_YAML_FILES.include?(basename)
 
       project_files_at_root << basename if File.extname(path) == '.yml'
     end
