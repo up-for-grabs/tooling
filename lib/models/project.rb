@@ -21,6 +21,12 @@ class Project
     File.open(@full_path, 'w') { |f| f.write obj.to_yaml(line_width: 100) }
   end
 
+  def update(stats)
+    obj = read_yaml
+    obj.store('stats', 'issue-count' => stats[:count], 'last-updated' => stats[:updated_at])
+    write_yaml(obj)
+  end
+
   def github_project?
     github_owner_name_pair != nil
   end
