@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'up_for_grabs_tooling'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.licenses    = ['MIT']
   s.summary     = "Tooling for Up-For-Grabs infrastructure"
   s.description = "This gem is used to simplify the heavy-lifting that infrastructure scripts for Up-For-Grabs uses. As it's very specific to the Up-For-Grabs project, you don't need to use this yourself."
