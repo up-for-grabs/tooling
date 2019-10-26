@@ -38,24 +38,6 @@ class Project
     false
   end
 
-  def try_read_owner_repo(url)
-    # path semgent in Ruby looks like /{owner}/repo so we drop the
-    # first array value (which should be an empty string) and then
-    # combine the next two elements
-
-    path_segments = url.path.split('/')
-
-    # this likely means the URL points to a filtered search URL
-    return nil if path_segments.length < 3
-
-    values = path_segments.drop(1).take(2)
-
-    # points to a project board for the organization
-    return nil if values[0].casecmp('orgs').zero?
-
-    values.join('/')
-  end
-
   def find_github_owner_repo_pair
     yaml = read_yaml
     url = yaml['upforgrabs']['link']
@@ -66,6 +48,19 @@ class Project
 
     return nil unless uri.host.casecmp('github.com').zero?
 
-    try_read_owner_repo(uri)
+    # path semgent in Ruby looks like /{owner}/repo so we drop the
+    # first array value (which should be an empty string) and then
+    # combine the next two elements
+    path_segments = uri.path.split('/')
+
+    # this likely means the URL points to a filtered search URL
+    return nil if path_segments.length < 3
+
+    values = path_segments.drop(1).take(2)
+
+    # points to a project board for the organization
+    return nil if values[0].casecmp('orgs').zero?
+
+    values.join('/')
   end
 end
