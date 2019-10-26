@@ -2,54 +2,42 @@
 
 # Check the projects directory for anything invalid
 class DirectoryValidator
-  def self.check(root)
-    other_files = []
+  def self.validate(root)
+    invalid_data_files = []
 
-    Find.find("#{root}/_data/projects") do |path|
+    projects_dir = File.join(root, "_data", "projects")
+
+    Find.find(projects_dir) do |path|
       next unless FileTest.file?(path)
 
-      other_files << path if File.extname(path) != '.yml'
+      relative_path = Pathname.new(path).relative_path_from(root).to_s
+
+      invalid_data_files << relative_path if File.extname(path) != '.yml'
     end
 
-    count = other_files.count
+    project_files_at_root = []
 
-    if count.positive?
-      puts "#{count} files found in projects directory which are not YAML files:"
-      r = Pathname.new(root)
-
-      other_files.each do |f|
-        relative_path = Pathname.new(f).relative_path_from(r).to_s
-        puts " - #{relative_path}"
-      end
-
-      exit(-1)
-    end
+    normalized_root_path = Pathname.new(root)
 
     valid_yaml_files = ['_config.yml', 'docker-compose.yml', '.rubocop.yml']
 
-    Find.find("#{root}/") do |path|
+    Find.find(root) do |path|
       next unless FileTest.file?(path)
-      next unless File.dirname(path) == root
+
+      dirname = File.dirname(path)
+      normalized_dirname = Pathname.new(dirname)
+
+      next unless normalized_dirname == root
 
       basename = File.basename(path)
       next if valid_yaml_files.include?(basename)
 
-      other_files << basename if File.extname(path) == '.yml'
+      project_files_at_root << basename if File.extname(path) == '.yml'
     end
 
-    count = other_files.count
-
-    return unless count.positive?
-
-    puts "#{count} files found in root which look like content files:"
-    r = Pathname.new(root)
-
-    other_files.each do |f|
-      puts " - #{f}"
-    end
-
-    puts 'Move these inside _data/projects to ensure they are listed on the site'
-
-    exit(-1)
+    {
+      project_files_at_root: project_files_at_root,
+      invalid_data_files: invalid_data_files,
+    }
   end
 end
