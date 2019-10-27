@@ -35,6 +35,13 @@ class Project
     @github_owner_name_pair ||= find_github_owner_repo_pair
   end
 
+  def self.find_in_directory(root)
+    Dir["#{root}/_data/projects/*.yml"].map do |f|
+      relative_path = Pathname.new(f).relative_path_from(root).to_s
+      Project.new(relative_path, f)
+    end
+  end
+
   private
 
   def valid_url?(url)
