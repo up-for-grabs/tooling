@@ -10,3 +10,5 @@ require 'models/project'
 require 'validators/data_files'
 require 'validators/directory'
 require 'validators/project'
+
+require 'queries/github_repository_active_check'
