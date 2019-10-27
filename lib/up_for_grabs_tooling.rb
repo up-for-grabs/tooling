@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "safe_yaml/load"
+require 'safe_yaml/load'
 
 require 'find'
 require 'json_schemer'
