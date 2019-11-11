@@ -12,7 +12,11 @@ module GitHubRepositoryLabelActiveCheck
 
     label = repository.label
     count = label.issues.total_count
-    last_updated = label.issues.nodes[0].updated_at
+    if count > 0
+      last_updated = label.issues.nodes[0].updated_at
+    else
+      last_updated = nil
+    end
 
     { reason: 'found', name: label.name, url: label.url, count: count, last_updated: last_updated }
   end
@@ -78,7 +82,7 @@ module GitHubRepositoryLabelActiveCheck
           label(name: $label) {
             name
             url
-            issues(states: OPEN, first: 2, orderBy: {field: UPDATED_AT, direction: DESC}) {
+            issues(states: OPEN, first: 1, orderBy: {field: UPDATED_AT, direction: DESC}) {
               totalCount
               nodes {
                 number
