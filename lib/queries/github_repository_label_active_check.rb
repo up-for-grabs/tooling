@@ -95,6 +95,8 @@ module GitHubRepositoryLabelActiveCheck
         }
       }
     GRAPHQL
+
+    client
   end
 
   private_class_method :client, :create_client
