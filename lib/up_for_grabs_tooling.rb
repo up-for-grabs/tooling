@@ -12,3 +12,4 @@ require 'validators/directory'
 require 'validators/project'
 
 require 'queries/github_repository_active_check'
+require 'queries/github_repository_label_active_check'
