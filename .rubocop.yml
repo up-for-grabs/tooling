@@ -16,7 +16,11 @@ Metrics/LineLength:
     - 'test/**/*.rb'
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 24
 
 Metrics/MethodLength:
-  Max: 25
+  Max: 41
+
+Lint/NestedMethodDefinition:
+  Exclude:
+    - 'lib/queries/github_repository_label_active_check.rb'
