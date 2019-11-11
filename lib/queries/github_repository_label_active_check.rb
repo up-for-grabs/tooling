@@ -27,7 +27,7 @@ module GitHubRepositoryLabelActiveCheck
       }
     end
 
-    result = @client.query(RateLimitQuery)
+    result = client.query(self.class.RateLimitQuery)
 
     return { rate_limited: true } if result.data.rate_limit.remaining.zero?
 
@@ -40,7 +40,7 @@ module GitHubRepositoryLabelActiveCheck
 
     variables = { owner: owner, name: name, label: label }
 
-    parse(@client.query(IssueCountForLabel, variables: variables))
+    parse(client.query(self.class.IssueCountForLabel, variables: variables))
   rescue StandardError => e
     { reason: 'error', error: e }
   end
@@ -50,7 +50,7 @@ module GitHubRepositoryLabelActiveCheck
   end
 
   def self.create_client
-    self.class.HTTP = GraphQL::Client::HTTP.new('https://api.github.com/graphql') do
+    http = GraphQL::Client::HTTP.new('https://api.github.com/graphql') do
       def headers(_context)
         # Optionally set any HTTP headers
         {
@@ -60,9 +60,9 @@ module GitHubRepositoryLabelActiveCheck
       end
     end
 
-    self.class.Schema = GraphQL::Client.load_schema(HTTP)
+    schema = GraphQL::Client.load_schema(http)
 
-    client = GraphQL::Client.new(schema: Schema, execute: HTTP)
+    client = GraphQL::Client.new(schema: schema, execute: http)
 
     self.class.RateLimitQuery = client.parse <<-'GRAPHQL'
       {
@@ -72,7 +72,7 @@ module GitHubRepositoryLabelActiveCheck
       }
     GRAPHQL
 
-    self.class.IssueCountForLabel = @client.parse <<-'GRAPHQL'
+    self.class.IssueCountForLabel = client.parse <<-'GRAPHQL'
       query($owner: String!, $name: String!, $label: String!) {
         repository(owner: $owner, name: $name) {
           label(name: $label) {

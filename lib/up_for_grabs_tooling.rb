@@ -5,8 +5,7 @@ require 'safe_yaml/load'
 require 'find'
 require 'json_schemer'
 
-require 'graphql/client'
-require 'graphql/client/http'
+require 'graphql'
 
 require 'models/project'
 
