@@ -5,52 +5,6 @@ require 'graphql/client/http'
 
 # Check using the GitHub API whether the label in a repository is active
 module GitHubRepositoryLabelActiveCheck
-  HTTP = GraphQL::Client::HTTP.new('https://api.github.com/graphql') do
-    def headers(_context)
-      # Optionally set any HTTP headers
-      {
-        "User-Agent": 'up-for-grabs-graphql-label-queries',
-        "Authorization": "bearer #{ENV['GITHUB_TOKEN']}"
-      }
-    end
-  end
-
-  Schema = GraphQL::Client.load_schema(HTTP)
-
-  @client = GraphQL::Client.new(schema: Schema, execute: HTTP)
-
-  RateLimitQuery = @client.parse <<-'GRAPHQL'
-    {
-      rateLimit {
-        remaining
-      }
-    }
-  GRAPHQL
-
-  IssueCountForLabel = @client.parse <<-'GRAPHQL'
-    query($owner: String!, $name: String!, $label: String!) {
-      repository(owner: $owner, name: $name) {
-        label(name: $label) {
-          name
-          url
-          issues(states: OPEN, first: 2, orderBy: {field: UPDATED_AT, direction: DESC}) {
-            totalCount
-            nodes {
-              number
-              updatedAt
-            }
-          }
-        }
-      }
-      rateLimit {
-        limit
-        cost
-        remaining
-        resetAt
-      }
-    }
-  GRAPHQL
-
   def self.parse(result)
     repository = result.data.repository
 
@@ -93,4 +47,60 @@ module GitHubRepositoryLabelActiveCheck
   rescue StandardError => e
     { reason: 'error', error: e }
   end
+
+  def self.client
+    @client ||= create_client
+  end
+
+  def self.create_client
+    self.class.HTTP = GraphQL::Client::HTTP.new('https://api.github.com/graphql') do
+      def headers(_context)
+        # Optionally set any HTTP headers
+        {
+          "User-Agent": 'up-for-grabs-graphql-label-queries',
+          "Authorization": "bearer #{ENV['GITHUB_TOKEN']}"
+        }
+      end
+    end
+
+    self.class.Schema = GraphQL::Client.load_schema(HTTP)
+
+    client = GraphQL::Client.new(schema: Schema, execute: HTTP)
+
+    self.class.RateLimitQuery = client.parse <<-'GRAPHQL'
+      {
+        rateLimit {
+          remaining
+        }
+      }
+    GRAPHQL
+
+    self.class.IssueCountForLabel = @client.parse <<-'GRAPHQL'
+      query($owner: String!, $name: String!, $label: String!) {
+        repository(owner: $owner, name: $name) {
+          label(name: $label) {
+            name
+            url
+            issues(states: OPEN, first: 2, orderBy: {field: UPDATED_AT, direction: DESC}) {
+              totalCount
+              nodes {
+                number
+                updatedAt
+              }
+            }
+          }
+        }
+        rateLimit {
+          limit
+          cost
+          remaining
+          resetAt
+        }
+      }
+    GRAPHQL
+
+    client
+  end
+
+  private_class_method :client, :create_client
 end
