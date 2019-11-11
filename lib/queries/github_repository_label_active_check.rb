@@ -27,7 +27,7 @@ module GitHubRepositoryLabelActiveCheck
       }
     end
 
-    result = client.query(self.class.RateLimitQuery)
+    result = client.query(RateLimitQuery)
 
     return { rate_limited: true } if result.data.rate_limit.remaining.zero?
 
@@ -40,7 +40,7 @@ module GitHubRepositoryLabelActiveCheck
 
     variables = { owner: owner, name: name, label: label }
 
-    parse(client.query(self.class.IssueCountForLabel, variables: variables))
+    parse(client.query(IssueCountForLabel, variables: variables))
   rescue StandardError => e
     { reason: 'error', error: e }
   end
