@@ -12,11 +12,7 @@ module GitHubRepositoryLabelActiveCheck
 
     label = repository.label
     count = label.issues.total_count
-    if count > 0
-      last_updated = label.issues.nodes[0].updated_at
-    else
-      last_updated = nil
-    end
+    last_updated = (label.issues.nodes[0].updated_at if count.positive?)
 
     { reason: 'found', name: label.name, url: label.url, count: count, last_updated: last_updated }
   end
