@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'graphql/client'
-require 'graphql/client/http'
-
 # Check using the GitHub API whether the label in a repository is active
 module GitHubRepositoryLabelActiveCheck
   def self.parse(result)
