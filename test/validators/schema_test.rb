@@ -112,24 +112,6 @@ class ProjectValidatorTests < Minitest::Test
     assert_equal result[1], "Expected array for tags but found value 'hello'"
   end
 
-  def test_duplicate_tag_error
-    schemer = setup_schemer
-    project = create_project('error_duplicate_tags.yml')
-
-    result = ProjectValidator.validate(project, schemer)
-
-    assert_equal result[0], 'Duplicate tags found: javascript'
-  end
-
-  def test_recommended_tag_error
-    schemer = setup_schemer
-    project = create_project('error_recommended_tag.yml')
-
-    result = ProjectValidator.validate(project, schemer)
-
-    assert_equal result[0], "Rename tag 'js' to be'javascript'"
-  end
-
   def setup_schemer
     root = File.dirname(File.dirname(__dir__))
     schema = Pathname.new("#{root}/schema.json")
