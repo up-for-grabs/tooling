@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'project'
-
 # Validate the data files
 class DataFilesValidator
   def self.validate(root, schemer = nil)
