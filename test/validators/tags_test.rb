@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../test_helper'
-
 class TagsValidatorTests < Minitest::Test
   def test_duplicate_tag_error
     project = create_project('error_duplicate_tags.yml')

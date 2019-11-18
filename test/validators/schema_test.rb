@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../test_helper'
-
 class SchemaValidatorTests < Minitest::Test
   def test_valid_file_returns_no_errors
     schemer = setup_schemer

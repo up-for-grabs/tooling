@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../test_helper'
-
 class DirectoryValidatorTests < Minitest::Test
   def test_incorrect_files_found
     path = get_directory('incorrect_files_found')
