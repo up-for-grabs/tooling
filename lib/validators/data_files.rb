@@ -19,7 +19,7 @@ class DataFilesValidator
     end
 
     projects.each do |p|
-      validation_errors = ProjectValidator.validate(p, schemer)
+      validation_errors = SchemaValidator.validate(p, schemer)
       unless validation_errors.empty?
         projects_with_errors.store(p.relative_path, validation_errors)
       end
