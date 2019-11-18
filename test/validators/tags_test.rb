@@ -3,9 +3,7 @@
 require_relative '../test_helper'
 
 class TagsValidatorTests < Minitest::Test
-  
   def test_duplicate_tag_error
-    schemer = setup_schemer
     project = create_project('error_duplicate_tags.yml')
 
     result = TagsValidator.validate(project)
@@ -14,18 +12,11 @@ class TagsValidatorTests < Minitest::Test
   end
 
   def test_recommended_tag_error
-    schemer = setup_schemer
     project = create_project('error_recommended_tag.yml')
 
     result = TagsValidator.validate(project)
 
     assert_equal result[0], "Rename tag 'js' to be'javascript'"
-  end
-
-  def setup_schemer
-    root = File.dirname(File.dirname(__dir__))
-    schema = Pathname.new("#{root}/schema.json")
-    JSONSchemer.schema(schema)
   end
 
   def create_project(name)
