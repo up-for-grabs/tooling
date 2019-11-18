@@ -19,6 +19,14 @@ class TagsValidatorTests < Minitest::Test
     assert_equal result[0], "Rename tag 'js' to be'javascript'"
   end
 
+  def test_tags_as_string_error
+    project = create_project('error_tags_as_string.yml')
+
+    result = TagsValidator.validate(project)
+
+    assert_equal result[0], "Expected array for tags but found value 'hello'"
+  end
+
   def create_project(name)
     parent = File.dirname(__dir__)
     full_path = Pathname.new("#{parent}/fixtures/projects/#{name}")
