@@ -22,6 +22,12 @@ class DataFilesValidator
       validation_errors = SchemaValidator.validate(p, schemer)
       unless validation_errors.empty?
         projects_with_errors.store(p.relative_path, validation_errors)
+        next
+      end
+
+      tag_errors = TagsValidator.validate(p)
+      unless tag_errors.empty?
+        projects_with_errors.store(p.relative_path, tag_errors)
       end
     end
 
