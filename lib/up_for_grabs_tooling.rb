@@ -8,6 +8,8 @@ require 'json_schemer'
 require 'graphql/client'
 require 'graphql/client/http'
 
+require 'formatters/command_line'
+
 require 'models/project'
 
 require 'validators/data_files'
