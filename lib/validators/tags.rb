@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Represents the checks performed on a project to ensure it can be parsed
-# and used as site data in Jekyll
+# Represents the checks performed on the tags specified in a project satisfy the
+# requirements for what we are curating
 class TagsValidator
   def self.validate(project)
     errors = []
