@@ -5,24 +5,25 @@ require_relative '../test_helper'
 class CommandLineFormatterTests < Minitest::Test
   def test_command_line_lists_failures
     result = {
-      # TODO: what do we put in here?
-      :projects => {
-        '_data/projects/first.yml' => {
-          :valid => true
+      projects: {
+        '_data/projects/first.yml': {
+          errors: []
         },
-        '_data/projects/second.yml' => {
-          :valid => false,
-          :errors => [
-            'unable '
+        '_data/projects/second.yml': {
+          errors: [
+            'No tags defined for file',
+            "Field 'something' expects a URL but instead found 'foo'"
           ]
         }
       }
-     }
+    }
 
     out, err = capture_io do
       CommandLineFormatter.output(result)
     end
 
-    assert_match %r%something went wrong?%, out
+    assert_match %r%  - _data/projects/second.yml%, out
+    assert_match %r%    - No tags defined for file%, out
+    assert_match %r%    - Field 'something' expects a URL but instead found 'foo'%, out
   end
 end
