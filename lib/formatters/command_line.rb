@@ -14,8 +14,6 @@ module CommandLineFormatter
       puts "  - #{key}:"
       value[:errors].each { |error| puts "    - #{error}" }
     end
-
-    puts "TODO: things"
   end
 end
 

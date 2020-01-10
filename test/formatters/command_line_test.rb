@@ -26,4 +26,23 @@ class CommandLineFormatterTests < Minitest::Test
     assert_match %r%    - No tags defined for file%, out
     assert_match %r%    - Field 'something' expects a URL but instead found 'foo'%, out
   end
+
+  def test_command_line_displays_success
+    result = {
+      projects: {
+        '_data/projects/first.yml': {
+          errors: []
+        },
+        '_data/projects/second.yml': {
+          errors: []
+        }
+      }
+    }
+
+    out, err = capture_io do
+      CommandLineFormatter.output(result)
+    end
+
+    assert_match %r%2 files processed - no errors found!%, out
+  end
 end
