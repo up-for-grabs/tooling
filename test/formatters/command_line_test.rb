@@ -3,7 +3,7 @@
 require_relative '../test_helper'
 
 class CommandLineFormatterTests < Minitest::Test
-  def test_command_line_lists_failures
+  def test_command_line_lists_failing_files
     result = {
       projects: {
         '_data/projects/first.yml': {
@@ -44,5 +44,24 @@ class CommandLineFormatterTests < Minitest::Test
     end
 
     assert_match %r%2 files processed - no errors found!%, out
+  end
+
+
+  def test_command_line_lists_orphaned_files
+    result = {
+      orphaned_project_files: [
+        'first.yml',
+        'second.yml'
+      ]
+    }
+
+    out, err = capture_io do
+      CommandLineFormatter.output(result)
+    end
+
+    assert_match %r%2 files found in root which look like project files%, out
+    assert_match %r%  - first.yml%, out
+    assert_match %r%  - second.yml%, out
+    assert_match %r%Move these inside _data/projects/ to ensure they are listed on the site%, out
   end
 end
