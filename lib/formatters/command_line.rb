@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module CommandLineFormatter
   def self.output(result)
-
     orphaned_project_files = result[:orphaned_project_files] || []
 
     if orphaned_project_files.any?
@@ -21,12 +22,12 @@ module CommandLineFormatter
 
     projects = result[:projects] || {}
 
-    unless projects.any? { |key,value| value[:errors].any? }
+    unless projects.any? { |_key, value| value[:errors].any? }
       puts "#{projects.count} files processed - no errors found!"
       return
     end
 
-    projects_with_errors = projects.select { |key,value| value[:errors].any? }
+    projects_with_errors = projects.select { |_key, value| value[:errors].any? }
 
     projects_with_errors.each do |key, value|
       puts "  - #{key}:"
@@ -34,4 +35,3 @@ module CommandLineFormatter
     end
   end
 end
-
