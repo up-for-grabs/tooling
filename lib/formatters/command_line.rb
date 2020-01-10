@@ -10,6 +10,15 @@ module CommandLineFormatter
       return
     end
 
+    invalid_data_files = result[:invalid_data_files] || []
+
+    if invalid_data_files.any?
+      puts "#{invalid_data_files.length} files found in projects directory which are not YAML files:"
+      invalid_data_files.each { |f| puts "  - #{f}" }
+      puts 'Remove these from the repository as they will not be used by the site'
+      return
+    end
+
     projects = result[:projects] || {}
 
     unless projects.any? { |key,value| value[:errors].any? }
