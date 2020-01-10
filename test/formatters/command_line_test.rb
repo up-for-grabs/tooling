@@ -48,7 +48,7 @@ class CommandLineFormatterTests < Minitest::Test
 
   def test_command_line_lists_orphaned_project_files
     result = {
-      orphaned_project_files: [
+      project_files_at_root: [
         'first.yml',
         'second.yml'
       ]

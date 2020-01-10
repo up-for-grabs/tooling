@@ -2,11 +2,11 @@
 
 module CommandLineFormatter
   def self.output(result)
-    orphaned_project_files = result[:orphaned_project_files] || []
+    project_files_at_root = result[:project_files_at_root] || []
 
-    if orphaned_project_files.any?
-      puts "#{orphaned_project_files.length} files found in root which look like project files:"
-      orphaned_project_files.each { |f| puts "  - #{f}" }
+    if project_files_at_root.any?
+      puts "#{project_files_at_root.length} files found in root which look like project files:"
+      project_files_at_root.each { |f| puts "  - #{f}" }
       puts 'Move these inside _data/projects/ to ensure they are listed on the site'
       return
     end
