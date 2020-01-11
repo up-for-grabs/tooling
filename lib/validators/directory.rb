@@ -5,7 +5,7 @@ class DirectoryValidator
   VALID_YAML_FILES = ['_config.yml', 'docker-compose.yml', '.rubocop.yml'].freeze
 
   def self.validate(root)
-    Kernel.warn "DirectoryValidator.validate is obsolete, and should be replaced with CommandLineValidator.validate"
+    Kernel.warn 'DirectoryValidator.validate is obsolete, and should be replaced with CommandLineValidator.validate'
     invalid_data_files = []
 
     projects_dir = File.join(root, '_data', 'projects')

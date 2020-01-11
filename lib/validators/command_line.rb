@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class CommandLineValidator
   def self.validate(root, schemer = nil)
-
     projects = Dir["#{root}/_data/projects/*.yml"].map do |f|
       relative_path = Pathname.new(f).relative_path_from(root).to_s
       Project.new(relative_path, f)

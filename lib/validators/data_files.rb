@@ -3,7 +3,7 @@
 # Validate the data files
 class DataFilesValidator
   def self.validate(root, schemer = nil)
-    Kernel.warn "DataFilesValidator.validate is obsolete, and should be replaced with CommandLineValidator.validate that provides a superset of this functionality"
+    Kernel.warn 'DataFilesValidator.validate is obsolete, and should be replaced with CommandLineValidator.validate that provides a superset of this functionality'
 
     projects = Dir["#{root}/_data/projects/*.yml"].map do |f|
       relative_path = Pathname.new(f).relative_path_from(root).to_s
