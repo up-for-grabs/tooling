@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'project'
-
 # Validate the data files
 class DataFilesValidator
   def self.validate(root, schemer = nil)
@@ -19,9 +17,15 @@ class DataFilesValidator
     end
 
     projects.each do |p|
-      validation_errors = ProjectValidator.validate(p, schemer)
+      validation_errors = SchemaValidator.validate(p, schemer)
       unless validation_errors.empty?
         projects_with_errors.store(p.relative_path, validation_errors)
+        next
+      end
+
+      tag_errors = TagsValidator.validate(p)
+      unless tag_errors.empty?
+        projects_with_errors.store(p.relative_path, tag_errors)
       end
     end
 

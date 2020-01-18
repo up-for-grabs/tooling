@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../test_helper'
-
 class DataFilesValidatorTests < Minitest::Test
   def test_valid_directory
     path = get_directory('valid_project_files')

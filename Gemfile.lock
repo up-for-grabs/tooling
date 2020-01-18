@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    up_for_grabs_tooling (0.0.4)
+    up_for_grabs_tooling (0.0.5)
       graphql-client (~> 0.16)
       json_schemer (~> 0.2)
       octokit (~> 4.14)
