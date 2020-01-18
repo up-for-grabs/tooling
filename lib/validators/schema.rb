@@ -3,7 +3,7 @@
 # Represents the checks performed on a project to ensure it can be parsed
 # and used as site data in Jekyll
 class SchemaValidator
-  def self.validate(project, schemer)
+  def self.validate(project, schemer = nil)
     errors = []
 
     begin
@@ -16,6 +16,12 @@ class SchemaValidator
 
     # don't continue if there was a problem parsing the file
     return errors if errors.any?
+
+    if schemer.nil?
+      library_root = File.dirname(File.dirname(__dir__))
+      schema = Pathname.new("#{library_root}/schema.json")
+      schemer = JSONSchemer.schema(schema)
+    end
 
     valid = schemer.valid?(yaml)
     unless valid
