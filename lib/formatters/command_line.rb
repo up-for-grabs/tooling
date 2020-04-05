@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This module contains the formatter for use when consuming the analysis from
+# the command line, and will emit results to the terminal using `puts`
 module CommandLineFormatter
   def self.output(result)
     project_files_at_root = result[:project_files_at_root] || []
