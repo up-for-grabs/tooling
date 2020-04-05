@@ -26,7 +26,7 @@ class CommandLineValidator
       errors = SchemaValidator.validate(p, schemer)
       errors = errors.concat TagsValidator.validate(p)
 
-      results.store(p.relative_path, errors: errors)
+      results.store(p.relative_path, { errors: errors })
     end
 
     second = DirectoryValidator.validate(root)

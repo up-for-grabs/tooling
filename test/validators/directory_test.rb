@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class DirectoryValidatorTests < Minitest::Test
+class CommandLineValidatorTests < Minitest::Test
   def test_incorrect_files_found
     path = get_directory('incorrect_files_found')
 
-    result = DirectoryValidator.validate(path)
+    result = CommandLineValidator.validate(path)
 
     assert_equal ['_data/projects/thing.json'], result[:invalid_data_files]
     assert_equal ['lost_project_file.yml'], result[:project_files_at_root]

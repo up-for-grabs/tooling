@@ -4,21 +4,23 @@ class DataFilesValidatorTests < Minitest::Test
   def test_valid_directory
     path = get_directory('valid_project_files')
 
-    result = DataFilesValidator.validate(path)
+    result = CommandLineValidator.validate(path)
 
-    assert_equal 3, result[:count]
-    assert result[:errors].empty?
+    assert_equal 3, result[:projects].count
+    result[:projects].each {|key, value| assert value[:errors].empty? }
   end
 
   def test_file_has_error
     path = get_directory('one_file_with_error')
 
-    result = DataFilesValidator.validate(path)
+    result = CommandLineValidator.validate(path)
 
-    assert_equal 2, result[:count]
-    assert_equal 1, result[:errors].length
+    assert_equal 2, result[:projects].count
 
-    errors = result[:errors]['_data/projects/error_site_link_url.yml']
+    project_with_errors =  result[:projects]['_data/projects/error_site_link_url.yml']
+
+    errors = project_with_errors[:errors]
+
     assert_equal 1, errors.length
     assert_equal errors[0], "Field '/site' expects a URL but instead found 'foo'. Please check and update this value."
   end
