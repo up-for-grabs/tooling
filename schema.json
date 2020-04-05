@@ -89,6 +89,21 @@
               "format": "date-time"
             }
           }
+        },
+        {
+          "type": "object",
+          "title": "Statistics for the current project",
+          "required": ["issue-count"],
+          "properties": {
+            "issue-count": {
+              "$id": "#/properties/stats/properties/issue-count",
+              "type": "integer",
+              "title": "The Issue-count Schema",
+              "default": 0,
+              "minimum": 0,
+              "maximum": 0
+            }
+          }
         }
       ]
     }
