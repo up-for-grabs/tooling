@@ -4,23 +4,38 @@ AllCops:
     - 'test/**/*.rb'
     - 'Rakefile'
 
-Metrics/CyclomaticComplexity:
-  Max: 8
-
-Metrics/PerceivedComplexity:
-  Max: 9
-
-Metrics/LineLength:
+Layout/LineLength:
   Exclude:
     - 'lib/**/*.rb'
     - 'test/**/*.rb'
 
+Lint/NestedMethodDefinition:
+  Exclude:
+    - 'lib/queries/github_repository_label_active_check.rb'
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
 Metrics/AbcSize:
   Max: 24
+
+Metrics/CyclomaticComplexity:
+  Max: 8
 
 Metrics/MethodLength:
   Max: 41
 
-Lint/NestedMethodDefinition:
-  Exclude:
-    - 'lib/queries/github_repository_label_active_check.rb'
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
