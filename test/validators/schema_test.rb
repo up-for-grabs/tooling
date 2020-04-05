@@ -6,7 +6,23 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert result.empty?
+    assert_empty result
+  end
+
+  def test_valid_file_with_stats_returns_no_errors
+    project = create_project('valid_project_with_stats.yml')
+
+    result = SchemaValidator.validate(project)
+
+    assert_empty result
+  end
+
+  def test_valid_file_with_no_open_issues_returns_no_errors
+    project = create_project('valid_project_with_no_open_issues.yml')
+
+    result = SchemaValidator.validate(project)
+
+    assert_empty result
   end
 
   def test_parsing_error
