@@ -10,10 +10,16 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 9
 
-Metrics/LineLength:
+Layout/LineLength:
   Exclude:
     - 'lib/**/*.rb'
     - 'test/**/*.rb'
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
 
 Metrics/AbcSize:
   Max: 24
@@ -24,3 +30,12 @@ Metrics/MethodLength:
 Lint/NestedMethodDefinition:
   Exclude:
     - 'lib/queries/github_repository_label_active_check.rb'
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
