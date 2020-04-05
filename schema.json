@@ -64,28 +64,33 @@
         }
       }
     },
-    "stats": {
+    "stats":
+    {
       "$id": "#/properties/stats",
-      "type": "object",
-      "title": "Statistics for the current project",
-      "default": null,
-      "required": ["issue-count", "last-updated"],
-      "properties": {
-        "issue-count": {
-          "$id": "#/properties/stats/properties/issue-count",
-          "type": "integer",
-          "title": "The Issue-count Schema",
-          "default": 0,
-          "minimum": 0
-        },
-        "last-updated": {
-          "$id": "#/properties/stats/properties/last-updated",
-          "type": "string",
-          "title": "The Last-updated Schema",
-          "default": "",
-          "format": "date-time"
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "Statistics for the current project",
+          "default": null,
+          "required": ["issue-count", "last-updated"],
+          "properties": {
+            "issue-count": {
+              "$id": "#/properties/stats/properties/issue-count",
+              "type": "integer",
+              "title": "The Issue-count Schema",
+              "default": 0,
+              "minimum": 0
+            },
+            "last-updated": {
+              "$id": "#/properties/stats/properties/last-updated",
+              "type": "string",
+              "title": "The Last-updated Schema",
+              "default": "",
+              "format": "date-time"
+            }
+          }
         }
-      }
+      ]
     }
   }
 }
