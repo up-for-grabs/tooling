@@ -12,7 +12,6 @@ require 'formatters/command_line'
 
 require 'models/project'
 
-require 'validators/data_files'
 require 'validators/directory'
 require 'validators/schema'
 require 'validators/tags'
