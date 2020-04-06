@@ -21,7 +21,7 @@ Lint/StructNewOverride:
   Enabled: true
 
 Metrics/AbcSize:
-  Max: 24
+  Max: 29
 
 Metrics/CyclomaticComplexity:
   Max: 8
