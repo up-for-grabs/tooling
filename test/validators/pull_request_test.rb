@@ -22,9 +22,27 @@ class PullRequestValidatorTests < Minitest::Test
     assert_match 'No problems found, everything should be good to merge!', message
   end
 
-  # def test_one_file_warn_when_wrong_extension
-  #   refute true
-  # end
+  def test_one_file_warn_when_wrong_extension
+    dir = get_test_directory('wrong-extension')
+    files = get_files_in_directory('wrong-extension')
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_match '#### Unexpected files found in project directory', message
+    assert_match ' - `_data/projects/project.yaml`', message
+    assert_match 'All files under `_data/projects/` must end with `.yml` to be listed on the site', message
+  end
+
+  def test_one_file_warn_when_no_extension
+    dir = get_test_directory('missing-extension')
+    files = get_files_in_directory('missing-extension')
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_match '#### Unexpected files found in project directory', message
+    assert_match ' - `_data/projects/project`', message
+    assert_match 'All files under `_data/projects/` must end with `.yml` to be listed on the site', message
+  end
 
   # def test_one_file_warn_when_schema_validation_failed
   #   refute true
