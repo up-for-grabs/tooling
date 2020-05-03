@@ -23,14 +23,14 @@ class PullRequestValidator
 
     markdown_body = "#{PREAMBLE_HEADER}\n\n" + GREETING_HEADER
 
-    projects_without_valid_extensions = projects.select { |p| File.extname(p.relative_path) != ".yml" }
+    projects_without_valid_extensions = projects.reject { |p| File.extname(p.relative_path) == '.yml' }
 
     if projects_without_valid_extensions.any?
-      messages = [ "#### Unexpected files found in project directory" ]
+      messages = ['#### Unexpected files found in project directory']
       projects_without_valid_extensions.each do |p|
         messages << " - `#{p.relative_path}`"
       end
-      messages << "All files under `_data/projects/` must end with `.yml` to be listed on the site"
+      messages << 'All files under `_data/projects/` must end with `.yml` to be listed on the site'
     else
       messages = projects.compact.map { |p| review_project(p) }.map do |result|
         path = result[:project].relative_path
