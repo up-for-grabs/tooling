@@ -37,7 +37,5 @@ module CommandLineFormatter
       puts "  - #{key}:"
       value[:errors].each { |error| puts "    - #{error}" }
     end
-
-    exit(1)
   end
 end

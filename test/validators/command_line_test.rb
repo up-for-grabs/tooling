@@ -13,6 +13,8 @@ class CommandLineValidatorTests < Minitest::Test
     assert projects['_data/projects/julia.yml'][:errors].empty?
     assert projects['_data/projects/timegrid.yml'][:errors].empty?
     assert projects['_data/projects/up-for-grabs.net.yml'][:errors].empty?
+
+    assert result[:success]
   end
 
   def test_incorrect_files_found
@@ -25,6 +27,8 @@ class CommandLineValidatorTests < Minitest::Test
 
     assert_equal ['_data/projects/thing.json'], invalid_data_files
     assert_equal ['lost_project_file.yml'], project_files_at_root
+
+    refute result[:success]
   end
 
   def test_file_has_error
@@ -40,6 +44,8 @@ class CommandLineValidatorTests < Minitest::Test
 
     assert_equal 1, errors.length
     assert_equal errors[0], "Field '/site' expects a URL but instead found 'foo'. Please check and update this value."
+
+    refute result[:success]
   end
 
   def get_directory(name)

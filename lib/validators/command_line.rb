@@ -22,15 +22,28 @@ class CommandLineValidator
 
     results = {}
 
+    success = true
+
     projects.each do |p|
       errors = SchemaValidator.validate(p, schemer)
       errors = errors.concat TagsValidator.validate(p)
 
+      success = false if errors.any?
+
       results.store(p.relative_path, { errors: errors })
     end
 
-    second = DirectoryValidator.validate(root)
+    directory_result = DirectoryValidator.validate(root)
 
-    { projects: results }.merge(second)
+    result = {
+      projects: results
+    }.merge(directory_result)
+
+    success = false if directory_result[:project_files_at_root].any?
+    success = false if directory_result[:invalid_data_files].any?
+
+    result[:success] = success
+
+    result
   end
 end
