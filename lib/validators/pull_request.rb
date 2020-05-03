@@ -44,7 +44,9 @@ class PullRequestValidator
     markdown_body + messages.join("\n\n")
   end
 
-  private
+  private_class_method :review_project
+  private_class_method :repository_check
+  private_class_method :label_check
 
   def self.review_project(project)
     validation_errors = SchemaValidator.validate(project)
