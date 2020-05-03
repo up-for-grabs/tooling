@@ -15,15 +15,10 @@ class PullRequestValidator
   "As you make changes to this pull request, I'll re-run these checks.\n\n"
 
   def self.validate(dir, files, _initial_message = false, _schemer = nil)
-
     projects = files.map do |f|
       full_path = File.join(dir, f)
 
-      if File.exist?(full_path)
-        Project.new(f, full_path)
-      else
-        nil
-      end
+      Project.new(f, full_path) if File.exist?(full_path)
     end
 
     markdown_body = "#{PREAMBLE_HEADER}\n\n" + GREETING_HEADER

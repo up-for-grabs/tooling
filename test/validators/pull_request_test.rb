@@ -66,6 +66,6 @@ class PullRequestValidatorTests < Minitest::Test
   def get_files_in_directory(name)
     parent = File.dirname(__dir__)
     root = "#{parent}/fixtures/pull_request/#{name}"
-    Dir.chdir(root) { Dir.glob("**/*").select { |path| File.file?(path) } }
+    Dir.chdir(root) { Dir.glob('**/*').select { |path| File.file?(path) } }
   end
 end
