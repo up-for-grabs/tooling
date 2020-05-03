@@ -44,10 +44,6 @@ class PullRequestValidator
     markdown_body + messages.join("\n\n")
   end
 
-  private_class_method :review_project
-  private_class_method :repository_check
-  private_class_method :label_check
-
   def self.review_project(project)
     validation_errors = SchemaValidator.validate(project)
 
@@ -108,7 +104,7 @@ class PullRequestValidator
     nil
   end
 
-  def label_check(project)
+  def self.label_check(project)
     result = GitHubRepositoryLabelActiveCheck.run(project)
 
     if result[:rate_limited]
@@ -142,4 +138,8 @@ class PullRequestValidator
 
     nil
   end
+
+  private_class_method :review_project
+  private_class_method :repository_check
+  private_class_method :label_check
 end
