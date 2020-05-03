@@ -6,4 +6,6 @@ SimpleCov.start do
 end
 
 require 'minitest/autorun'
+require 'mocha/minitest'
+
 require './lib/up_for_grabs_tooling'

@@ -16,6 +16,7 @@ require 'validators/directory'
 require 'validators/schema'
 require 'validators/tags'
 require 'validators/command_line'
+require 'validators/pull_request'
 
 require 'queries/github_repository_active_check'
 require 'queries/github_repository_label_active_check'
