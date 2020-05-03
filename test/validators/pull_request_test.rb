@@ -44,9 +44,15 @@ class PullRequestValidatorTests < Minitest::Test
     assert_match 'All files under `_data/projects/` must end with `.yml` to be listed on the site', message
   end
 
-  # def test_one_file_warn_when_schema_validation_failed
-  #   refute true
-  # end
+  def test_one_file_warn_when_schema_validation_failed
+    dir = get_test_directory('schema-validation')
+    files = get_files_in_directory('schema-validation')
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_match '#### `_data/projects/error_site_link_url.yml` :x:', message
+    assert_match ' Field \'/site\' expects a URL but instead found \'foo\'. Please check and update this value.', message
+  end
 
   # def test_one_file_warn_when_tags_need_rename
   #   refute true
