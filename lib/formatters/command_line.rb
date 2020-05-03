@@ -31,6 +31,8 @@ module CommandLineFormatter
 
     projects_with_errors = projects.select { |_key, value| value[:errors].any? }
 
+    puts "#{projects_with_errors.count} files contain errors:"
+
     projects_with_errors.each do |key, value|
       puts "  - #{key}:"
       value[:errors].each { |error| puts "    - #{error}" }
