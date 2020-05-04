@@ -150,7 +150,13 @@ class PullRequestValidator
     nil
   end
 
+  def self.find_label(project)
+    yaml = project.read_yaml
+    yaml['upforgrabs']['name']
+  end
+
   private_class_method :review_project
   private_class_method :repository_check
   private_class_method :label_check
+  private_class_method :find_label
 end

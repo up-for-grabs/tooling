@@ -8,13 +8,19 @@ class PullRequestValidatorTests < Minitest::Test
     files = get_files_in_directory('one-file')
 
     # stub these calls that depend on the GitHub API
-    PullRequestValidator
-      .expects(:repository_check)
-      .returns(nil)
+    repository_result = { }
 
-    PullRequestValidator
-      .expects(:label_check)
-      .returns(nil)
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .returns(repository_result)
+
+    label_result = {
+      url: "https://github.com/up-for-grabs/up-for-grabs.net/labels/up-for-grabs"
+    }
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .returns(label_result)
 
     message = PullRequestValidator.validate(dir, files)
 
@@ -46,6 +52,22 @@ class PullRequestValidatorTests < Minitest::Test
     message = PullRequestValidator.validate(dir, files)
 
     assert_markdown 'schema-validation', message
+  end
+
+  def test_one_file_warn_when_github_project_archived
+    dir = get_test_directory('github-repository-archived')
+    files = get_files_in_directory('github-repository-archived')
+
+    # stub these calls that depend on the GitHub API
+    archived = { reason: 'archived' }
+
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .returns(archived)
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_markdown 'github-repository-archived', message
   end
 
   def test_one_file_warn_when_tags_need_rename
