@@ -18,8 +18,7 @@ class PullRequestValidatorTests < Minitest::Test
 
     message = PullRequestValidator.validate(dir, files)
 
-    assert_match '#### `_data/projects/project.yml` :white_check_mark: ', message
-    assert_match 'No problems found, everything should be good to merge!', message
+    assert_markdown 'one-file', message
   end
 
   def test_one_file_warn_when_wrong_extension
@@ -28,9 +27,7 @@ class PullRequestValidatorTests < Minitest::Test
 
     message = PullRequestValidator.validate(dir, files)
 
-    assert_match '#### Unexpected files found in project directory', message
-    assert_match ' - `_data/projects/project.yaml`', message
-    assert_match 'All files under `_data/projects/` must end with `.yml` to be listed on the site', message
+    assert_markdown 'wrong-extension', message
   end
 
   def test_one_file_warn_when_no_extension
@@ -39,9 +36,7 @@ class PullRequestValidatorTests < Minitest::Test
 
     message = PullRequestValidator.validate(dir, files)
 
-    assert_match '#### Unexpected files found in project directory', message
-    assert_match ' - `_data/projects/project`', message
-    assert_match 'All files under `_data/projects/` must end with `.yml` to be listed on the site', message
+    assert_markdown 'missing-extension', message
   end
 
   def test_one_file_warn_when_schema_validation_failed
@@ -50,37 +45,42 @@ class PullRequestValidatorTests < Minitest::Test
 
     message = PullRequestValidator.validate(dir, files)
 
-    assert_match '#### `_data/projects/error_site_link_url.yml` :x:', message
-    assert_match ' Field \'/site\' expects a URL but instead found \'foo\'. Please check and update this value.', message
+    assert_markdown 'schema-validation', message
   end
 
-  # def test_one_file_warn_when_tags_need_rename
-  #   refute true
-  # end
+  def test_one_file_warn_when_tags_need_rename
+    skip "TODO"
+  end
 
-  # def test_one_file_changed_with_no_previous_message_includes_preamble
-  #   refute true
-  # end
+  def test_one_file_changed_with_no_previous_message_includes_preamble
+    skip "TODO"
+  end
 
-  # def test_one_file_changed_with_previous_message_omits_preamble
-  #   refute true
-  # end
+  def test_one_file_changed_with_previous_message_omits_preamble
+    skip "TODO"
+  end
 
-  # def test_two_files_with_no_problems_lists_both_files
-  #   refute true
-  # end
+  def test_two_files_with_no_problems_lists_both_files
+    skip "TODO"
+  end
 
-  # def test_three_files_with_no_problems_lists_summary
-  #   refute true
-  # end
+  def test_three_files_with_no_problems_lists_summary
+    skip "TODO"
+  end
 
-  # def test_one_file_with_error_out_of_three_only_lists_problem_file
-  #   refute true
-  # end
+  def test_one_file_with_error_out_of_three_only_lists_problem_file
+    skip "TODO"
+  end
 
-  # def test_twenty_files_without_error_lists_summary
-  #   refute true
-  # end
+  def test_twenty_files_without_error_lists_summary
+    skip "TODO"
+  end
+
+  def assert_markdown(name, output)
+    parent = File.dirname(__dir__)
+    expected = File.read("#{parent}/fixtures/pull_request/#{name}-result.md")
+    assert_equal output.chomp, expected.chomp
+  end
 
   def get_test_directory(name)
     parent = File.dirname(__dir__)

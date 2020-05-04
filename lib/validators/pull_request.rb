@@ -36,7 +36,7 @@ class PullRequestValidator
         path = result[:project].relative_path
 
         if result[:kind] == 'valid'
-          "#### `#{path}` :white_check_mark: \nNo problems found, everything should be good to merge!"
+          "#### `#{path}` :white_check_mark:\nNo problems found, everything should be good to merge!"
         elsif result[:kind] == 'validation'
           message = result[:validation_errors].map { |e| "> - #{e}" }.join "\n"
           "#### `#{path}` :x:\nI had some troubles parsing the project file, or there were fields that are missing that I need.\n\nHere's the details:\n#{message}"
