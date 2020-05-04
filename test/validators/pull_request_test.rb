@@ -96,7 +96,39 @@ class PullRequestValidatorTests < Minitest::Test
   end
 
   def test_two_files_with_no_problems_lists_both_files
-    skip 'TODO'
+    dir = get_test_directory('two-valid-files')
+    files = get_files_in_directory('two-valid-files')
+
+    first = files[0]
+    second = files[1]
+
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == first }
+      .returns({})
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == first }
+      .returns({
+                 url: 'https://github.com/owner/first/labels/up-for-grabs'
+               })
+
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == second }
+      .returns({})
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == second }
+      .returns({
+                 url: 'https://github.com/owner/second/labels/up-for-grabs'
+               })
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_markdown 'two-valid-files', message
   end
 
   def test_three_files_with_no_problems_lists_summary
@@ -125,6 +157,6 @@ class PullRequestValidatorTests < Minitest::Test
   def get_files_in_directory(name)
     parent = File.dirname(__dir__)
     root = "#{parent}/fixtures/pull_request/#{name}"
-    Dir.chdir(root) { Dir.glob('**/*').select { |path| File.file?(path) } }
+    Dir.chdir(root) { Dir.glob('**/*').select { |path| File.file?(path) } }.sort
   end
 end

@@ -26,6 +26,7 @@ Metrics/AbcSize:
 Metrics/ClassLength:
   Exclude:
     - 'lib/validators/pull_request.rb'
+    - 'test/**/*.rb'
 
 Metrics/CyclomaticComplexity:
   Max: 8
