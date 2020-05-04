@@ -124,20 +124,20 @@ class PullRequestValidator
       return nil
     end
 
-    label = find_label(project)
-
     if result[:reason] == 'repository-missing'
       return "I couldn't find the GitHub repository '#{project.github_owner_name_pair}' that was used in the `upforgrabs.link` value." \
             " Please confirm this is correct or hasn't been mis-typed."
     end
 
+    yaml = project.read_yaml
+
     if result[:reason] == 'missing'
+      label = yaml['upforgrabs']['name']
       return "The `upforgrabs.name` value '#{label}' isn't in use on the project in GitHub." \
             ' This might just be a mistake due because of copy-pasting the reference template or be mis-typed.' \
             " Please check the list of labels at https://github.com/#{project.github_owner_name_pair}/labels and update the project file to use the correct label."
     end
 
-    yaml = project.read_yaml
     link = yaml['upforgrabs']['link']
     url = result[:url]
 
@@ -150,13 +150,7 @@ class PullRequestValidator
     nil
   end
 
-  def self.find_label(project)
-    yaml = project.read_yaml
-    yaml['upforgrabs']['name']
-  end
-
   private_class_method :review_project
   private_class_method :repository_check
   private_class_method :label_check
-  private_class_method :find_label
 end

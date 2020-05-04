@@ -14,7 +14,7 @@ class TagsValidatorTests < Minitest::Test
 
     result = TagsValidator.validate(project)
 
-    assert_equal result[0], "Rename tag 'js' to be'javascript'"
+    assert_equal result[0], "Rename tag 'js' to be 'javascript'"
   end
 
   def test_tags_as_string_error
