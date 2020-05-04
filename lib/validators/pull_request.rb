@@ -12,16 +12,18 @@ class PullRequestValidator
 
   GREETING_HEADER = ":wave: I'm a robot checking the state of this pull request to save the human reveiwers time." \
   " I noticed this PR added or modififed the data files under `_data/projects/` so I had a look at what's changed.\n\n" \
-  "As you make changes to this pull request, I'll re-run these checks.\n\n"
+  "As you make changes to this pull request, I'll re-run these checks."
 
-  def self.validate(dir, files, _initial_message = false, _schemer = nil)
+  UPDATE_HEADER = 'Checking the latest changes to the pull request:'
+
+  def self.validate(dir, files, initial_message: true)
     projects = files.map do |f|
       full_path = File.join(dir, f)
 
       Project.new(f, full_path) if File.exist?(full_path)
     end
 
-    markdown_body = "#{PREAMBLE_HEADER}\n\n" + GREETING_HEADER
+    markdown_body = "#{PREAMBLE_HEADER}\n\n" + get_header(initial_message) + "\n\n"
 
     projects_without_valid_extensions = projects.reject { |p| File.extname(p.relative_path) == '.yml' }
 
@@ -53,6 +55,14 @@ class PullRequestValidator
     end
 
     markdown_body + messages.join("\n\n")
+  end
+
+  def self.get_header(initial_message)
+    if initial_message
+      GREETING_HEADER
+    else
+      UPDATE_HEADER
+    end
   end
 
   def self.review_project(project)

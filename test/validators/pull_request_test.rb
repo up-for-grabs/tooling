@@ -75,12 +75,24 @@ class PullRequestValidatorTests < Minitest::Test
     assert_markdown 'github-repository-archived', message
   end
 
-  def test_one_file_changed_with_no_previous_message_includes_preamble
-    skip 'TODO'
-  end
-
   def test_one_file_changed_with_previous_message_omits_preamble
-    skip 'TODO'
+    dir = get_test_directory('one-file')
+    files = get_files_in_directory('one-file')
+
+    # stub these calls that depend on the GitHub API
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .returns({})
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .returns({
+                 url: 'https://github.com/up-for-grabs/up-for-grabs.net/labels/up-for-grabs'
+               })
+
+    message = PullRequestValidator.validate(dir, files, initial_message: false)
+
+    assert_markdown 'one-file-no-preamble', message
   end
 
   def test_two_files_with_no_problems_lists_both_files
