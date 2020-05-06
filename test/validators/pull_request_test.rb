@@ -95,6 +95,26 @@ class PullRequestValidatorTests < Minitest::Test
     assert_markdown 'one-file-no-preamble', message
   end
 
+  def test_one_file_with_label_error
+    dir = get_test_directory('one-file-label-error')
+    files = get_files_in_directory('one-file-label-error')
+
+    # stub these calls that depend on the GitHub API
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .returns({})
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .returns({
+                 url: 'https://github.com/owner/redirected-repo/labels/label'
+               })
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_markdown 'one-file-label-error', message
+  end
+
   def test_two_files_with_no_problems_lists_both_files
     dir = get_test_directory('two-valid-files')
     files = get_files_in_directory('two-valid-files')

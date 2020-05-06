@@ -156,9 +156,9 @@ class PullRequestValidator
     end
 
     yaml = project.read_yaml
+    label = yaml['upforgrabs']['name']
 
     if result[:reason] == 'missing'
-      label = yaml['upforgrabs']['name']
       return "The `upforgrabs.name` value '#{label}' isn't in use on the project in GitHub." \
             ' This might just be a mistake due because of copy-pasting the reference template or be mis-typed.' \
             " Please check the list of labels at https://github.com/#{project.github_owner_name_pair}/labels and update the project file to use the correct label."
