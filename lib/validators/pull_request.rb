@@ -16,7 +16,7 @@ class PullRequestValidator
 
   UPDATE_HEADER = 'Checking the latest changes to the pull request...'
 
-  def self.validate(dir, files, initial_message: true)
+  def self.generate_comment(dir, files, initial_message: true)
     projects = files.map do |f|
       full_path = File.join(dir, f)
 

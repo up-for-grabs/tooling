@@ -18,7 +18,7 @@ class PullRequestValidatorTests < Minitest::Test
                  url: 'https://github.com/up-for-grabs/up-for-grabs.net/labels/up-for-grabs'
                })
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'one-file', message
   end
@@ -27,7 +27,7 @@ class PullRequestValidatorTests < Minitest::Test
     dir = get_test_directory('wrong-extension')
     files = get_files_in_directory('wrong-extension')
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'wrong-extension', message
   end
@@ -36,7 +36,7 @@ class PullRequestValidatorTests < Minitest::Test
     dir = get_test_directory('missing-extension')
     files = get_files_in_directory('missing-extension')
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'missing-extension', message
   end
@@ -45,7 +45,7 @@ class PullRequestValidatorTests < Minitest::Test
     dir = get_test_directory('schema-validation')
     files = get_files_in_directory('schema-validation')
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'schema-validation', message
   end
@@ -54,7 +54,7 @@ class PullRequestValidatorTests < Minitest::Test
     dir = get_test_directory('tags-validation')
     files = get_files_in_directory('tags-validation')
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'tags-validation', message
   end
@@ -70,7 +70,7 @@ class PullRequestValidatorTests < Minitest::Test
       .expects(:run)
       .returns(archived)
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'github-repository-archived', message
   end
@@ -90,7 +90,7 @@ class PullRequestValidatorTests < Minitest::Test
                  url: 'https://github.com/up-for-grabs/up-for-grabs.net/labels/up-for-grabs'
                })
 
-    message = PullRequestValidator.validate(dir, files, initial_message: false)
+    message = PullRequestValidator.generate_comment(dir, files, initial_message: false)
 
     assert_markdown 'one-file-no-preamble', message
   end
@@ -110,7 +110,7 @@ class PullRequestValidatorTests < Minitest::Test
                  url: 'https://github.com/owner/redirected-repo/labels/label'
                })
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'one-file-label-error', message
   end
@@ -146,7 +146,7 @@ class PullRequestValidatorTests < Minitest::Test
                  url: 'https://github.com/owner/second/labels/up-for-grabs'
                })
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'two-valid-files', message
   end
@@ -155,7 +155,7 @@ class PullRequestValidatorTests < Minitest::Test
     dir = get_test_directory('three-valid-files')
     files = get_files_in_directory('three-valid-files')
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'three-valid-files', message
   end
@@ -191,7 +191,7 @@ class PullRequestValidatorTests < Minitest::Test
                  url: 'https://github.com/owner/second/labels/up-for-grabs'
                })
 
-    message = PullRequestValidator.validate(dir, files)
+    message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'three-files-one-error', message
   end
