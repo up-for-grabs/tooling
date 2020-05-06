@@ -49,7 +49,7 @@ class PullRequestValidator
         messages << projects_with_errors.map { |result| get_validation_message(result) }
       end
     else
-      messages = projects.map { |p| review_project(p) }.map { |result| get_validation_message(result) }
+      messages = projects.map { |p| review_project(p) }.map { |r| get_validation_message(r) }
     end
 
     markdown_body + messages.join("\n\n")
