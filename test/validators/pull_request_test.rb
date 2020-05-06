@@ -176,10 +176,6 @@ class PullRequestValidatorTests < Minitest::Test
     assert_markdown 'three-files-one-error', message
   end
 
-  def test_twenty_files_without_error_lists_summary
-    skip 'TODO'
-  end
-
   def assert_markdown(name, output)
     parent = File.dirname(__dir__)
     expected = File.read("#{parent}/fixtures/pull_request/#{name}-result.md")
