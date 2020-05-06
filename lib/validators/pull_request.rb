@@ -23,6 +23,8 @@ class PullRequestValidator
       Project.new(f, full_path) if File.exist?(full_path)
     end
 
+    projects.compact!
+
     markdown_body = "#{PREAMBLE_HEADER}\n\n" + get_header(initial_message) + "\n\n"
 
     projects_without_valid_extensions = projects.reject { |p| File.extname(p.relative_path) == '.yml' }
@@ -33,25 +35,20 @@ class PullRequestValidator
         messages << " - `#{p.relative_path}`"
       end
       messages << 'All files under `_data/projects/` must end with `.yml` to be listed on the site'
-    else
-      messages = projects.compact.map { |p| review_project(p) }.map do |result|
-        path = result[:project].relative_path
+    elsif projects.count > 2
+      results = projects.map { |p| review_project(p) }
+      valid_projects, projects_with_errors = results.partition { |r| r[:kind] == "valid" }
 
-        if result[:kind] == 'valid'
-          "#### `#{path}` :white_check_mark:\nNo problems found, everything should be good to merge!"
-        elsif result[:kind] == 'validation'
-          message = result[:validation_errors].map { |e| "> - #{e}" }.join "\n"
-          "#### `#{path}` :x:\nI had some troubles parsing the project file, or there were fields that are missing that I need.\n\nHere's the details:\n#{message}"
-        elsif result[:kind] == 'tags'
-          message = result[:tags_errors].map { |e| "> - #{e}" }.join "\n"
-          "#### `#{path}` :x:\nI have some suggestions about the tags used in the project:\n\n#{message}"
-        elsif result[:kind] == 'repository' || result[:kind] == 'label'
-          "#### `#{path}` :x:\n#{result[:message]}"
-        else
-          "#### `#{path}` :question:\nI got a result of type '#{result[:kind]}' that I don't know how to handle. I need to mention @shiftkey here as he might be able to fix it."
-        end
+      if projects_with_errors.empty?
+        messages = [
+          "#### **#{valid_projects.count}** projects without issues :white_check_mark:",
+          "Everything should be good to merge!"
+        ]
+      else
+        messages = [ "THINGS" ]
       end
-
+    else
+      messages = projects.map { |p| review_project(p) }.map { |result| get_validation_message(result) }
     end
 
     markdown_body + messages.join("\n\n")
@@ -62,6 +59,24 @@ class PullRequestValidator
       GREETING_HEADER
     else
       UPDATE_HEADER
+    end
+  end
+
+  def self.get_validation_message(result)
+    path = result[:project].relative_path
+
+    if result[:kind] == 'valid'
+      "#### `#{path}` :white_check_mark:\nNo problems found, everything should be good to merge!"
+    elsif result[:kind] == 'validation'
+      message = result[:validation_errors].map { |e| "> - #{e}" }.join "\n"
+      "#### `#{path}` :x:\nI had some troubles parsing the project file, or there were fields that are missing that I need.\n\nHere's the details:\n#{message}"
+    elsif result[:kind] == 'tags'
+      message = result[:tags_errors].map { |e| "> - #{e}" }.join "\n"
+      "#### `#{path}` :x:\nI have some suggestions about the tags used in the project:\n\n#{message}"
+    elsif result[:kind] == 'repository' || result[:kind] == 'label'
+      "#### `#{path}` :x:\n#{result[:message]}"
+    else
+      "#### `#{path}` :question:\nI got a result of type '#{result[:kind]}' that I don't know how to handle. I need to mention @shiftkey here as he might be able to fix it."
     end
   end
 

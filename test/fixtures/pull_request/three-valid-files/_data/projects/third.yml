@@ -1,0 +1,12 @@
+---
+name: A Project
+desc: It does things!
+site: https://somesite.com
+tags:
+- oss
+- web
+- jekyll
+- javascript
+upforgrabs:
+  name: up-for-grabs
+  link: https://somesite.com/project/tasks

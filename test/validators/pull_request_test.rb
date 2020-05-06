@@ -132,7 +132,12 @@ class PullRequestValidatorTests < Minitest::Test
   end
 
   def test_three_files_with_no_problems_lists_summary
-    skip 'TODO'
+    dir = get_test_directory('three-valid-files')
+    files = get_files_in_directory('three-valid-files')
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_markdown 'three-valid-files', message
   end
 
   def test_one_file_with_error_out_of_three_only_lists_problem_file
