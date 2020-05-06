@@ -14,7 +14,7 @@ class PullRequestValidator
   " I noticed this PR added or modififed the data files under `_data/projects/` so I had a look at what's changed.\n\n" \
   "As you make changes to this pull request, I'll re-run these checks."
 
-  UPDATE_HEADER = 'Checking the latest changes to the pull request:'
+  UPDATE_HEADER = 'Checking the latest changes to the pull request...'
 
   def self.validate(dir, files, initial_message: true)
     projects = files.map do |f|
