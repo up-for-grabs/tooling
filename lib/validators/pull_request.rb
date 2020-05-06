@@ -37,15 +37,15 @@ class PullRequestValidator
       messages << 'All files under `_data/projects/` must end with `.yml` to be listed on the site'
     elsif projects.count > 2
       results = projects.map { |p| review_project(p) }
-      valid_projects, projects_with_errors = results.partition { |r| r[:kind] == "valid" }
+      valid_projects, projects_with_errors = results.partition { |r| r[:kind] == 'valid' }
 
       if projects_with_errors.empty?
         messages = [
           "#### **#{valid_projects.count}** projects without issues :white_check_mark:",
-          "Everything should be good to merge!"
+          'Everything should be good to merge!'
         ]
       else
-        messages = [ "#### **#{valid_projects.count}** projects without issues :white_check_mark:" ]
+        messages = ["#### **#{valid_projects.count}** projects without issues :white_check_mark:"]
         messages << projects_with_errors.map { |result| get_validation_message(result) }
       end
     else
