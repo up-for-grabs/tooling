@@ -1,7 +1,7 @@
 ---
-name: Up-For-Grabs.net
-desc: This site!
-site: https://github.com/owner/third
+name: A Project
+desc: It does things!
+site: https://somesite.com
 tags:
 - oss
 - web
@@ -9,4 +9,4 @@ tags:
 - javascript
 upforgrabs:
   name: up-for-grabs
-  link: https://github.com/owner/third/labels/up-for-grabs
+  link: not-a-url

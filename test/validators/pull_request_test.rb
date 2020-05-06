@@ -141,7 +141,39 @@ class PullRequestValidatorTests < Minitest::Test
   end
 
   def test_one_file_with_error_out_of_three_only_lists_problem_file
-    skip 'TODO'
+    dir = get_test_directory('three-files-one-error')
+    files = get_files_in_directory('three-files-one-error')
+
+    first = files[0]
+    second = files[1]
+
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == first }
+      .returns({})
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == first }
+      .returns({
+                 url: 'https://github.com/owner/first/labels/up-for-grabs'
+               })
+
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == second }
+      .returns({})
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .with { |project| project.relative_path == second }
+      .returns({
+                 url: 'https://github.com/owner/second/labels/up-for-grabs'
+               })
+
+    message = PullRequestValidator.validate(dir, files)
+
+    assert_markdown 'three-files-one-error', message
   end
 
   def test_twenty_files_without_error_lists_summary

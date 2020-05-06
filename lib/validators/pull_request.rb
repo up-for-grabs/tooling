@@ -45,7 +45,8 @@ class PullRequestValidator
           "Everything should be good to merge!"
         ]
       else
-        messages = [ "THINGS" ]
+        messages = [ "#### **#{valid_projects.count}** projects without issues :white_check_mark:" ]
+        messages << projects_with_errors.map { |result| get_validation_message(result) }
       end
     else
       messages = projects.map { |p| review_project(p) }.map { |result| get_validation_message(result) }
