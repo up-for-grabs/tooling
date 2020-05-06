@@ -23,6 +23,11 @@ Lint/StructNewOverride:
 Metrics/AbcSize:
   Enabled: false
 
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/validators/pull_request.rb'
+    - 'test/**/*.rb'
+
 Metrics/CyclomaticComplexity:
   Max: 8
 
@@ -31,6 +36,8 @@ Metrics/MethodLength:
 
 Metrics/PerceivedComplexity:
   Max: 9
+  Exclude:
+    - 'lib/validators/pull_request.rb'
 
 Style/HashEachMethods:
   Enabled: true

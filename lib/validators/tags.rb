@@ -60,7 +60,7 @@ class TagsValidator
     tags.each do |tag|
       preferred_tag = PREFERENCES[tag]
 
-      errors << "Rename tag '#{tag}' to be'#{preferred_tag}'" if preferred_tag
+      errors << "Rename tag '#{tag}' to be '#{preferred_tag}'" if preferred_tag
     end
 
     errors

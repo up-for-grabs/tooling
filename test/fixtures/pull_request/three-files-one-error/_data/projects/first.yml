@@ -1,0 +1,12 @@
+---
+name: Up-For-Grabs.net
+desc: This site!
+site: https://github.com/owner/first
+tags:
+- oss
+- web
+- jekyll
+- javascript
+upforgrabs:
+  name: up-for-grabs
+  link: https://github.com/owner/first/labels/up-for-grabs

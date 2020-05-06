@@ -1,0 +1,12 @@
+---
+name: The Project
+desc: A Description Goes Here
+site: https://the-project.com
+tags:
+- oss
+- web
+- jekyll
+- javascript
+upforgrabs:
+  name: up-for-grabs
+  link: https://the-project.com/tasks/up-for-grabs

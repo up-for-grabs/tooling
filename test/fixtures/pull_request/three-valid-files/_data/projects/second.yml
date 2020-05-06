@@ -1,0 +1,12 @@
+---
+name: Another Project
+desc: It also does things
+site: https://project-web-site.com/
+tags:
+- oss
+- web
+- jekyll
+- javascript
+upforgrabs:
+  name: help-wanted
+  link: https://project-web-site.com/help-wanted
