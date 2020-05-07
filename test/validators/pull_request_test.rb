@@ -206,6 +206,15 @@ class PullRequestValidatorTests < Minitest::Test
     assert_markdown 'three-files-one-error', message
   end
 
+  def test_one_file_with_invalid_url_reports_error
+    dir = get_test_directory('one-file-label-url-error')
+    files = get_files_in_directory('one-file-label-url-error')
+
+    message = PullRequestValidator.generate_comment(dir, files)
+
+    assert_markdown 'one-file-label-url-error', message
+  end
+
   def assert_markdown(name, output)
     parent = File.dirname(__dir__)
     expected = File.read("#{parent}/fixtures/pull_request/#{name}-result.md")
