@@ -160,6 +160,16 @@ class PullRequestValidatorTests < Minitest::Test
     assert_markdown 'three-valid-files', message
   end
 
+  def test_three_files_with_deleted_file_lists_summary
+    dir = get_test_directory('three-valid-files')
+    files = get_files_in_directory('three-valid-files')
+    files << '_data/projects/deleted.yml'
+
+    message = PullRequestValidator.generate_comment(dir, files)
+
+    assert_markdown 'three-valid-files', message
+  end
+
   def test_one_file_with_error_out_of_three_only_lists_problem_file
     dir = get_test_directory('three-files-one-error')
     files = get_files_in_directory('three-files-one-error')
