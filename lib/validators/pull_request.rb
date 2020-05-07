@@ -74,6 +74,8 @@ class PullRequestValidator
     elsif result[:kind] == 'tags'
       message = result[:tags_errors].map { |e| "> - #{e}" }.join "\n"
       "#### `#{path}` :x:\nI have some suggestions about the tags used in the project:\n\n#{message}"
+    elsif result[:kind] == 'link-url'
+      "#### `#{path}` :x:\nThe `upforgrabs.url` value #{result[:url]} is not a valid URL - please check and update the value."
     elsif result[:kind] == 'repository' || result[:kind] == 'label'
       "#### `#{path}` :x:\n#{result[:message]}"
     else
@@ -92,6 +94,13 @@ class PullRequestValidator
 
     if tags_errors.any?
       return { project: project, kind: 'tags', tags_errors: tags_errors }
+    end
+
+    yaml = project.read_yaml
+    link = yaml['upforgrabs']['link']
+
+    unless valid_url?(link)
+      return { project: project, kind: 'link-url', url: link }
     end
 
     return { project: project, kind: 'valid' } unless project.github_project?
@@ -176,7 +185,15 @@ class PullRequestValidator
     nil
   end
 
+  def self.valid_url?(url)
+    uri = URI.parse(url)
+    uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
+  rescue URI::InvalidURIError
+    false
+  end
+
   private_class_method :review_project
   private_class_method :repository_check
   private_class_method :label_check
+  private_class_method :valid_url?
 end

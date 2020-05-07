@@ -1,0 +1,12 @@
+---
+name: Some Project
+desc: This is very much a project
+site: https://github.com/owner/repo
+tags:
+- tag
+- tag2
+- tag3
+- tag4
+upforgrabs:
+  name: label
+  link: hhttps://github.com/owner/repo/labels/label
