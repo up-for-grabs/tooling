@@ -86,36 +86,26 @@ class PullRequestValidator
   def self.review_project(project)
     validation_errors = SchemaValidator.validate(project)
 
-    if validation_errors.any?
-      return { project: project, kind: 'validation', validation_errors: validation_errors }
-    end
+    return { project: project, kind: 'validation', validation_errors: validation_errors } if validation_errors.any?
 
     tags_errors = TagsValidator.validate(project)
 
-    if tags_errors.any?
-      return { project: project, kind: 'tags', tags_errors: tags_errors }
-    end
+    return { project: project, kind: 'tags', tags_errors: tags_errors } if tags_errors.any?
 
     yaml = project.read_yaml
     link = yaml['upforgrabs']['link']
 
-    unless valid_url?(link)
-      return { project: project, kind: 'link-url', url: link }
-    end
+    return { project: project, kind: 'link-url', url: link } unless valid_url?(link)
 
     return { project: project, kind: 'valid' } unless project.github_project?
 
     repository_error = repository_check(project)
 
-    unless repository_error.nil?
-      return { project: project, kind: 'repository', message: repository_error }
-    end
+    return { project: project, kind: 'repository', message: repository_error } unless repository_error.nil?
 
     label_error = label_check(project)
 
-    unless label_error.nil?
-      return { project: project, kind: 'label', message: label_error }
-    end
+    return { project: project, kind: 'label', message: label_error } unless label_error.nil?
 
     { project: project, kind: 'valid' }
   end

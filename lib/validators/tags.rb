@@ -73,9 +73,7 @@ class TagsValidator
 
     return ['No tags defined for file'] if tags.nil? || tags.empty?
 
-    unless tags.is_a?(Array)
-      return ["Expected array for tags but found value '#{tags}'"]
-    end
+    return ["Expected array for tags but found value '#{tags}'"] unless tags.is_a?(Array)
 
     errors.concat(validate_preferred_tags(tags))
 
