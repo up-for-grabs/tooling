@@ -4,7 +4,7 @@
 class DirectoryValidator
   VALID_YAML_FILES = ['_config.yml', 'docker-compose.yml', '.rubocop.yml'].freeze
 
-  ALLOWED_EXTENSIONS = [ '.yml', '.yaml']
+  ALLOWED_EXTENSIONS = ['.yml', '.yaml'].freeze
 
   def self.validate(root)
     invalid_data_files = []

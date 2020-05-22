@@ -23,7 +23,7 @@ class PullRequestValidatorTests < Minitest::Test
     assert_markdown 'one-file', message
   end
 
-  def test_one_file_is_good_to_merge
+  def test_one_file_with_yaml_extension
     dir = get_test_directory('alternate-yaml-extension')
     files = get_files_in_directory('alternate-yaml-extension')
 
