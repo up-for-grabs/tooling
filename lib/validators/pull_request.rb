@@ -34,7 +34,7 @@ class PullRequestValidator
       projects_without_valid_extensions.each do |p|
         messages << " - `#{p.relative_path}`"
       end
-      messages << 'All files under `_data/projects/` must end with `.yml` to be listed on the site'
+      messages << 'All files under `_data/projects/` must end with `.yml` or `.yaml` to be listed on the site'
     elsif projects.count > 2
       results = projects.map { |p| review_project(p) }
       valid_projects, projects_with_errors = results.partition { |r| r[:kind] == 'valid' }
