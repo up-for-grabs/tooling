@@ -6,6 +6,6 @@ As you make changes to this pull request, I'll re-run these checks.
 
 #### Unexpected files found in project directory
 
- - `_data/projects/project.yaml`
+ - `_data/projects/project.json`
 
-All files under `_data/projects/` must end with `.yml` to be listed on the site
+All files under `_data/projects/` must end with `.yml` or `.yaml` to be listed on the site

@@ -4,8 +4,5 @@
 
 As you make changes to this pull request, I'll re-run these checks.
 
-#### Unexpected files found in project directory
-
- - `_data/projects/project`
-
-All files under `_data/projects/` must end with `.yml` or `.yaml` to be listed on the site
+#### `_data/projects/project.yaml` :white_check_mark:
+No problems found, everything should be good to merge!
