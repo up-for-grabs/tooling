@@ -16,6 +16,8 @@ class PullRequestValidator
 
   UPDATE_HEADER = 'Checking the latest changes to the pull request...'
 
+  ALLOWED_EXTENSIONS = ['.yml', '.yaml'].freeze
+
   def self.generate_comment(dir, files, initial_message: true)
     projects = files.map do |f|
       full_path = File.join(dir, f)
@@ -27,14 +29,14 @@ class PullRequestValidator
 
     markdown_body = "#{PREAMBLE_HEADER}\n\n" + get_header(initial_message) + "\n\n"
 
-    projects_without_valid_extensions = projects.reject { |p| File.extname(p.relative_path) == '.yml' }
+    projects_without_valid_extensions = projects.reject { |p| ALLOWED_EXTENSIONS.include? File.extname(p.relative_path) }
 
     if projects_without_valid_extensions.any?
       messages = ['#### Unexpected files found in project directory']
       projects_without_valid_extensions.each do |p|
         messages << " - `#{p.relative_path}`"
       end
-      messages << 'All files under `_data/projects/` must end with `.yml` to be listed on the site'
+      messages << 'All files under `_data/projects/` must end with `.yml` or `.yaml` to be listed on the site'
     elsif projects.count > 2
       results = projects.map { |p| review_project(p) }
       valid_projects, projects_with_errors = results.partition { |r| r[:kind] == 'valid' }
