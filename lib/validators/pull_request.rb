@@ -27,7 +27,7 @@ class PullRequestValidator
 
     projects.compact!
 
-    markdown_body = "#{PREAMBLE_HEADER}\n\n" + get_header(initial_message) + "\n\n"
+    markdown_body = "#{PREAMBLE_HEADER}\n\n#{get_header(initial_message)}\n\n"
 
     projects_without_valid_extensions = projects.reject { |p| ALLOWED_EXTENSIONS.include? File.extname(p.relative_path) }
 
@@ -68,17 +68,18 @@ class PullRequestValidator
   def self.get_validation_message(result)
     path = result[:project].relative_path
 
-    if result[:kind] == 'valid'
+    case result[:kind]
+    when 'valid'
       "#### `#{path}` :white_check_mark:\nNo problems found, everything should be good to merge!"
-    elsif result[:kind] == 'validation'
+    when 'validation'
       message = result[:validation_errors].map { |e| "> - #{e}" }.join "\n"
       "#### `#{path}` :x:\nI had some troubles parsing the project file, or there were fields that are missing that I need.\n\nHere's the details:\n#{message}"
-    elsif result[:kind] == 'tags'
+    when 'tags'
       message = result[:tags_errors].map { |e| "> - #{e}" }.join "\n"
       "#### `#{path}` :x:\nI have some suggestions about the tags used in the project:\n\n#{message}"
-    elsif result[:kind] == 'link-url'
+    when 'link-url'
       "#### `#{path}` :x:\nThe `upforgrabs.url` value #{result[:url]} is not a valid URL - please check and update the value."
-    elsif result[:kind] == 'repository' || result[:kind] == 'label'
+    when 'repository', 'label'
       "#### `#{path}` :x:\n#{result[:message]}"
     else
       "#### `#{path}` :question:\nI got a result of type '#{result[:kind]}' that I don't know how to handle. I need to mention @shiftkey here as he might be able to fix it."
