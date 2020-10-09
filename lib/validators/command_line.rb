@@ -26,7 +26,7 @@ class CommandLineValidator
 
     projects.each do |p|
       errors = SchemaValidator.validate(p, schemer)
-      errors = errors.concat TagsValidator.validate(p)
+      errors.concat TagsValidator.validate(p)
 
       success = false if errors.any?
 
