@@ -26,7 +26,7 @@ class SchemaValidatorTests < Minitest::Test
   end
 
   def test_parsing_error
-    skip "An upgraded dependency has caused this test to start failing, investigation needed..."
+    skip 'An upgraded dependency has caused this test to start failing, investigation needed...'
 
     project = create_project('error_parsing.yml')
 
