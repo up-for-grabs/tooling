@@ -10,9 +10,9 @@ class CommandLineValidatorTests < Minitest::Test
 
     projects = result[:projects]
 
-    assert projects['_data/projects/julia.yml'][:errors].empty?
-    assert projects['_data/projects/timegrid.yml'][:errors].empty?
-    assert projects['_data/projects/up-for-grabs.net.yml'][:errors].empty?
+    assert_empty projects['_data/projects/julia.yml'][:errors]
+    assert_empty projects['_data/projects/timegrid.yml'][:errors]
+    assert_empty projects['_data/projects/up-for-grabs.net.yml'][:errors]
 
     assert result[:success]
   end
@@ -43,7 +43,7 @@ class CommandLineValidatorTests < Minitest::Test
     errors = project_with_errors[:errors]
 
     assert_equal 1, errors.length
-    assert_equal errors[0], "Field '/site' expects a URL but instead found 'foo'. Please check and update this value."
+    assert_equal("Field '/site' expects a URL but instead found 'foo'. Please check and update this value.", errors[0])
 
     refute result[:success]
   end
