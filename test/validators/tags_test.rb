@@ -6,7 +6,7 @@ class TagsValidatorTests < Minitest::Test
 
     result = TagsValidator.validate(project)
 
-    assert_equal result[0], 'Duplicate tags found: javascript'
+    assert_equal('Duplicate tags found: javascript', result[0])
   end
 
   def test_recommended_tag_error
@@ -14,7 +14,7 @@ class TagsValidatorTests < Minitest::Test
 
     result = TagsValidator.validate(project)
 
-    assert_equal result[0], "Rename tag 'js' to be 'javascript'"
+    assert_equal("Rename tag 'js' to be 'javascript'", result[0])
   end
 
   def test_tags_as_string_error
@@ -22,7 +22,7 @@ class TagsValidatorTests < Minitest::Test
 
     result = TagsValidator.validate(project)
 
-    assert_equal result[0], "Expected array for tags but found value 'hello'"
+    assert_equal("Expected array for tags but found value 'hello'", result[0])
   end
 
   def create_project(name)

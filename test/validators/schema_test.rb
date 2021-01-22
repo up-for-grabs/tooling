@@ -32,7 +32,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], 'Unable to parse the contents of file - Line: 1, Offset: 0, Problem: found unknown escape character'
+    assert_equal('Unable to parse the contents of file - Line: 1, Offset: 0, Problem: found unknown escape character', result[0])
   end
 
   def test_missing_file_error
@@ -48,7 +48,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], 'Required fields are missing from file: name, link. Please check the example on the README and add these values.'
+    assert_equal('Required fields are missing from file: name, link. Please check the example on the README and add these values.', result[0])
   end
 
   def test_upper_case_tag_error
@@ -56,7 +56,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], "Tag 'Web' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -"
+    assert_equal("Tag 'Web' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -", result[0])
   end
 
   def test_site_link_url_error
@@ -64,7 +64,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], "Field '/site' expects a URL but instead found 'foo'. Please check and update this value."
+    assert_equal("Field '/site' expects a URL but instead found 'foo'. Please check and update this value.", result[0])
   end
 
   def test_upforgrabs_link_url_error
@@ -72,7 +72,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], "Field '/upforgrabs/link' expects a URL but instead found 'not-a-url'. Please check and update this value."
+    assert_equal("Field '/upforgrabs/link' expects a URL but instead found 'not-a-url'. Please check and update this value.", result[0])
   end
 
   def test_stats_negative_issue_count_error
@@ -80,7 +80,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], "Field '/stats/issue-count' expects a non-negative integer but instead found '-1'. Please check and update this value."
+    assert_equal("Field '/stats/issue-count' expects a non-negative integer but instead found '-1'. Please check and update this value.", result[0])
   end
 
   def test_stats_invalid_last_updated_error
@@ -88,7 +88,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], "Field '/stats/last-updated' expects date-time string but instead found '18 December 2019'. Please check and update this value."
+    assert_equal("Field '/stats/last-updated' expects date-time string but instead found '18 December 2019'. Please check and update this value.", result[0])
   end
 
   def test_no_tags_error
@@ -96,7 +96,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], 'Required fields are missing from file: tags. Please check the example on the README and add these values.'
+    assert_equal('Required fields are missing from file: tags. Please check the example on the README and add these values.', result[0])
   end
 
   def test_empty_tags_error
@@ -104,7 +104,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], "Field 'tags' needs to be an array of elements. Check the file and try again."
+    assert_equal("Field 'tags' needs to be an array of elements. Check the file and try again.", result[0])
   end
 
   def test_tags_as_string_error
@@ -112,7 +112,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal result[0], "Field 'tags' needs to be an array of elements. Check the file and try again."
+    assert_equal("Field 'tags' needs to be an array of elements. Check the file and try again.", result[0])
   end
 
   def create_project(name)
