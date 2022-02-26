@@ -18,7 +18,7 @@ class Project
   end
 
   def write_yaml(obj)
-    File.open(@full_path, 'w') { |f| f.write obj.to_yaml(line_width: 100) }
+    File.write(@full_path, obj.to_yaml(line_width: 100))
   end
 
   def update(stats)
