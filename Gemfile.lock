@@ -59,7 +59,7 @@ GEM
       regexp_parser (~> 2.0)
       uri_template (~> 0.7)
     minitest (5.15.0)
-    mocha (1.13.0)
+    mocha (1.14.0)
     multipart-post (2.1.1)
     octokit (4.22.0)
       faraday (>= 0.9)
