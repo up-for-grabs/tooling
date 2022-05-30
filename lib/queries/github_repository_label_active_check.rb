@@ -55,7 +55,7 @@ module GitHubRepositoryLabelActiveCheck
         # Optionally set any HTTP headers
         {
           'User-Agent': 'up-for-grabs-graphql-label-queries',
-          Authorization: "bearer #{ENV['GITHUB_TOKEN']}"
+          Authorization: "bearer #{ENV.fetch('GITHUB_TOKEN', nil)}"
         }
       end
     end

@@ -44,7 +44,7 @@ class GitHubRepositoryActiveCheck
   end
 
   def self.create_client
-    Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'])
+    Octokit::Client.new(access_token: ENV.fetch('GITHUB_TOKEN', nil))
   end
 
   private_class_method :client, :create_client
