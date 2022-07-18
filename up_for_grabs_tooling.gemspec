@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.metadata    = { "source_code_uri" => "https://github.com/up-for-grabs/up-for-grabs-gem" }
 
   s.add_runtime_dependency 'safe_yaml', '~> 1.0'
-  s.add_runtime_dependency 'octokit', '~> 4.14'
+  s.add_runtime_dependency 'octokit', '>= 4.14', '< 6.0'
   s.add_runtime_dependency 'graphql-client', '~> 0.16'
   s.add_runtime_dependency 'json_schemer', '~> 0.2'
 end
