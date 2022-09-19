@@ -27,7 +27,7 @@ module GitHubRepositoryLabelActiveCheck
       }
     end
 
-    puts "About to run query for GitHubRepositoryLabelActiveCheck::RateLimitQuery"
+    puts 'About to run query for GitHubRepositoryLabelActiveCheck::RateLimitQuery'
 
     result = client.query(GitHubRepositoryLabelActiveCheck::RateLimitQuery)
 
