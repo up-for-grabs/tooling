@@ -119,8 +119,8 @@ class PullRequestValidator
     result = GitHubRepositoryActiveCheck.run(project)
 
     if result[:rate_limited]
-      logger.info 'This script is currently rate-limited by the GitHub API'
-      logger.info 'Marking as inconclusive to indicate that no further work will be done here'
+      # logger.info 'This script is currently rate-limited by the GitHub API'
+      # logger.info 'Marking as inconclusive to indicate that no further work will be done here'
       return nil
     end
 
@@ -147,8 +147,8 @@ class PullRequestValidator
     result = GitHubRepositoryLabelActiveCheck.run(project)
 
     if result[:rate_limited]
-      logger.info 'This script is currently rate-limited by the GitHub API'
-      logger.info 'Marking as inconclusive to indicate that no further work will be done here'
+      # logger.info 'This script is currently rate-limited by the GitHub API'
+      # logger.info 'Marking as inconclusive to indicate that no further work will be done here'
       return nil
     end
 
