@@ -152,6 +152,10 @@ class PullRequestValidator
       return nil
     end
 
+    if result[:reason] == 'error'
+      return "An error occurred while querying for the project label. Details: #{result[:error]}"
+    end
+
     if result[:reason] == 'repository-missing'
       return "I couldn't find the GitHub repository '#{project.github_owner_name_pair}' that was used in the `upforgrabs.link` value. " \
              "Please confirm this is correct or hasn't been mis-typed."
