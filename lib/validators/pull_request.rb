@@ -10,9 +10,9 @@
 class PullRequestValidator
   PREAMBLE_HEADER = '<!-- PULL REQUEST ANALYZER GITHUB ACTION -->'
 
-  GREETING_HEADER = ":wave: I'm a robot checking the state of this pull request to save the human reveiwers time." \
-                    " I noticed this PR added or modififed the data files under `_data/projects/` so I had a look at what's changed.\n\n" \
-                    "As you make changes to this pull request, I'll re-run these checks."
+  GREETING_HEADER = ":wave: I'm a robot checking the state of this pull request to save the human reveiwers time. " \
+                    "I noticed this PR added or modififed the data files under `_data/projects/` so I had a look at what's changed." \
+                    "\n\nAs you make changes to this pull request, I'll re-run these checks."
 
   UPDATE_HEADER = 'Checking the latest changes to the pull request...'
 
@@ -153,17 +153,17 @@ class PullRequestValidator
     end
 
     if result[:reason] == 'repository-missing'
-      return "I couldn't find the GitHub repository '#{project.github_owner_name_pair}' that was used in the `upforgrabs.link` value." \
-             " Please confirm this is correct or hasn't been mis-typed."
+      return "I couldn't find the GitHub repository '#{project.github_owner_name_pair}' that was used in the `upforgrabs.link` value. " \
+             "Please confirm this is correct or hasn't been mis-typed."
     end
 
     yaml = project.read_yaml
     label = yaml['upforgrabs']['name']
 
     if result[:reason] == 'missing'
-      return "The `upforgrabs.name` value '#{label}' isn't in use on the project in GitHub." \
-             ' This might just be a mistake due because of copy-pasting the reference template or be mis-typed.' \
-             " Please check the list of labels at https://github.com/#{project.github_owner_name_pair}/labels and update the project file to use the correct label."
+      return "The `upforgrabs.name` value '#{label}' isn't in use on the project in GitHub. " \
+             'This might just be a mistake due because of copy-pasting the reference template or be mis-typed. ' \
+             "Please check the list of labels at https://github.com/#{project.github_owner_name_pair}/labels and update the project file to use the correct label."
     end
 
     link = yaml['upforgrabs']['link']
