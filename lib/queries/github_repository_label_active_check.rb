@@ -27,9 +27,18 @@ module GitHubRepositoryLabelActiveCheck
       }
     end
 
+    puts 'About to run query for GitHubRepositoryLabelActiveCheck::RateLimitQuery'
+
     result = client.query(GitHubRepositoryLabelActiveCheck::RateLimitQuery)
 
-    puts "result from GitHubRepositoryLabelActiveCheck query: #{result}"
+    puts "Result from GitHubRepositoryLabelActiveCheck query: #{result.original_hash} - errors: #{result.errors.messages.to_h}"
+
+    if result.errors.any?
+      return {
+        reason: 'error',
+        error: StandardError.new("GraphQL error encountered: '#{result.errors.messages.to_h}'")
+      }
+    end
 
     return { rate_limited: true } if result.data.rate_limit.remaining.zero?
 
