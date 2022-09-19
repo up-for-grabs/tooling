@@ -169,6 +169,9 @@ class PullRequestValidator
     link = yaml['upforgrabs']['link']
     url = result[:url]
 
+    puts "result: #{result}"
+    puts "yaml: #{yaml}"
+
     link_needs_rewriting = link != url && link.include?('/labels/')
 
     if link_needs_rewriting
