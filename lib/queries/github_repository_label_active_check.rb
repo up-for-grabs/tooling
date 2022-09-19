@@ -29,6 +29,8 @@ module GitHubRepositoryLabelActiveCheck
 
     result = client.query(GitHubRepositoryLabelActiveCheck::RateLimitQuery)
 
+    puts "result from GitHubRepositoryLabelActiveCheck query: #{result}"
+
     return { rate_limited: true } if result.data.rate_limit.remaining.zero?
 
     items = owner_and_repo.split('/')
