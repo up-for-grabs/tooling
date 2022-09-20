@@ -27,11 +27,7 @@ module GitHubRepositoryLabelActiveCheck
       }
     end
 
-    puts 'About to run query for GitHubRepositoryLabelActiveCheck::RateLimitQuery'
-
     result = client.query(GitHubRepositoryLabelActiveCheck::RateLimitQuery)
-
-    puts "Result from GitHubRepositoryLabelActiveCheck query: #{result.original_hash} - errors: #{result.errors.messages.to_h}"
 
     if result.errors.any?
       return {
@@ -71,7 +67,13 @@ module GitHubRepositoryLabelActiveCheck
       end
     end
 
-    schema = GraphQL::Client.load_schema(http)
+    schema = if ENV.fetch('READ_SCHEMA_FROM_CACHE', nil)
+               GraphQL::Client.load_schema('graphql-schema.json')
+             else
+               GraphQL::Client.load_schema(http)
+             end
+
+    GraphQL::Client.dump_schema(http, 'graphql-schema.json') if ENV.fetch('WRITE_SCHEMA_TO_DISK', nil)
 
     client = GraphQL::Client.new(schema: schema, execute: http)
 
