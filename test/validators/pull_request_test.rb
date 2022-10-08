@@ -27,17 +27,6 @@ class PullRequestValidatorTests < Minitest::Test
     dir = get_test_directory('alternate-yaml-extension')
     files = get_files_in_directory('alternate-yaml-extension')
 
-    # stub these calls that depend on the GitHub API
-    GitHubRepositoryActiveCheck
-      .expects(:run)
-      .returns({})
-
-    GitHubRepositoryLabelActiveCheck
-      .expects(:run)
-      .returns({
-                 url: 'https://github.com/up-for-grabs/up-for-grabs.net/labels/up-for-grabs'
-               })
-
     message = PullRequestValidator.generate_comment(dir, files)
 
     assert_markdown 'alternate-yaml-extension', message
