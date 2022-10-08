@@ -36,7 +36,7 @@ class GitHubRepositoryActiveCheck
     repo_last_updated = Date.parse(repo.updated_at)
 
     if repo_last_updated < five_years_ago
-      return { deprecated: false, reason: 'lack-of-activity', last_updated: repo.updated_at } 
+      return { deprecated: false, reason: 'lack-of-activity', last_updated: repo.updated_at }
     end
 
     { deprecated: false }
