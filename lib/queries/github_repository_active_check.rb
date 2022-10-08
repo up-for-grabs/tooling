@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'date'
 require 'octokit'
 
 # Check using the GitHub API whether the repository is active
@@ -30,6 +31,11 @@ class GitHubRepositoryActiveCheck
         location: repo.full_name
       }
     end
+
+    five_years_ago = Date.today - (5 * 365)
+    repo_last_updated = Date.parse(repo.updated_at)
+
+    return { deprecated: false, reason: 'lack-of-activity', last_updated: repo.updated_at } if repo_last_updated < five_years_ago
 
     { deprecated: false }
   rescue Octokit::NotFound
