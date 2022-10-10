@@ -34,7 +34,7 @@ class GitHubRepositoryActiveCheck
       }
     end
 
-    five_years_ago = Time.now - (5 * YEAR_IN_SECONDS)
+    five_years_ago = Time.now - (3 * YEAR_IN_SECONDS)
     repo_last_updated = repo.updated_at
 
     if repo_last_updated < five_years_ago
