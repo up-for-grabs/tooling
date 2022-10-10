@@ -32,8 +32,10 @@ class GitHubRepositoryActiveCheck
       }
     end
 
+    p "repository #{repo.full_name} was last updated #{repo.updated_at.class} - #{repo.updated_at}"
+
     five_years_ago = Date.today - (5 * 365)
-    repo_last_updated = Date.parse(repo.updated_at)
+    repo_last_updated = repo.updated_at
 
     if repo_last_updated < five_years_ago
       return { deprecated: false, reason: 'lack-of-activity', last_updated: repo.updated_at }
