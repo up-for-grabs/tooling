@@ -3,6 +3,8 @@
 require 'date'
 require 'octokit'
 
+YEAR_IN_SECONDS = 60 * 60 * 24 * 365
+
 # Check using the GitHub API whether the repository is active
 class GitHubRepositoryActiveCheck
   def self.run(project)
@@ -32,9 +34,7 @@ class GitHubRepositoryActiveCheck
       }
     end
 
-    p "repository #{repo.full_name} was last updated #{repo.updated_at.class} - #{repo.updated_at}"
-
-    five_years_ago = Date.today - (5 * 365)
+    five_years_ago = Time.now - (5 * YEAR_IN_SECONDS)
     repo_last_updated = repo.updated_at
 
     if repo_last_updated < five_years_ago
