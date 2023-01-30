@@ -227,7 +227,7 @@ class PullRequestValidatorTests < Minitest::Test
   def assert_markdown(name, output)
     parent = File.dirname(__dir__)
     expected = File.read("#{parent}/fixtures/pull_request/#{name}-result.md")
-    
+
     assert_equal output.chomp, expected.chomp
   end
 
