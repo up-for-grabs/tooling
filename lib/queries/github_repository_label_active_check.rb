@@ -91,6 +91,8 @@ module GitHubRepositoryLabelActiveCheck
           label(name: $label) {
             name
             url
+            hasIssuesEnabled
+            forkCount
             issues(states: OPEN, first: 1, orderBy: {field: UPDATED_AT, direction: DESC}) {
               totalCount
               nodes {
