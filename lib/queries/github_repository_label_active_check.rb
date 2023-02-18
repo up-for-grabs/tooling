@@ -77,7 +77,7 @@ module GitHubRepositoryLabelActiveCheck
 
     client = GraphQL::Client.new(schema: schema, execute: http)
 
-    GitHubRepositoryLabelActiveCheck.const_set :RateLimitQuery, client.parse(<<-'GRAPHQL')
+    GitHubRepositoryLabelActiveCheck.const_set :RateLimitQuery, client.parse(<<-GRAPHQL)
       {
         rateLimit {
           remaining
@@ -85,7 +85,7 @@ module GitHubRepositoryLabelActiveCheck
       }
     GRAPHQL
 
-    GitHubRepositoryLabelActiveCheck.const_set :IssueCountForLabel, client.parse(<<-'GRAPHQL')
+    GitHubRepositoryLabelActiveCheck.const_set :IssueCountForLabel, client.parse(<<-GRAPHQL)
       query($owner: String!, $name: String!, $label: String!) {
         repository(owner: $owner, name: $name) {
           label(name: $label) {
