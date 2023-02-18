@@ -8,13 +8,17 @@ module GitHubRepositoryLabelActiveCheck
     # we should be checking for repository existence before this, but flag it anyway
     return { reason: 'repository-missing' } if repository.nil?
 
+    return { reason: 'issues-disabled' } unless repository.has_issues_enabled
+
     return { reason: 'missing' } if repository.label.nil?
 
     label = repository.label
+    fork_count = repository.fork_count
+
     count = label.issues.total_count
     last_updated = (label.issues.nodes[0].updated_at if count.positive?)
 
-    { reason: 'found', name: label.name, url: label.url, count: count, last_updated: last_updated }
+    { reason: 'found', name: label.name, url: label.url, count: count, fork_count: fork_count, last_updated: last_updated }
   end
 
   def self.run(project)
