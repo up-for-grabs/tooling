@@ -81,39 +81,43 @@ module GitHubRepositoryLabelActiveCheck
 
     client = GraphQL::Client.new(schema:, execute: http)
 
-    GitHubRepositoryLabelActiveCheck.const_set :RateLimitQuery, client.parse(<<-GRAPHQL)
+    unless GitHubRepositoryLabelActiveCheck.const_defined?(:RateLimitQuery)
+      GitHubRepositoryLabelActiveCheck.const_set :RateLimitQuery, client.parse(<<-GRAPHQL)
       {
         rateLimit {
           remaining
         }
       }
-    GRAPHQL
+      GRAPHQL
+    end
 
-    GitHubRepositoryLabelActiveCheck.const_set :IssueCountForLabel, client.parse(<<-GRAPHQL)
-      query($owner: String!, $name: String!, $label: String!) {
-        repository(owner: $owner, name: $name) {
-          label(name: $label) {
-            name
-            url
-            hasIssuesEnabled
-            forkCount
-            issues(states: OPEN, first: 1, orderBy: {field: UPDATED_AT, direction: DESC}) {
-              totalCount
-              nodes {
-                number
-                updatedAt
+    unless GitHubRepositoryLabelActiveCheck.const_defined?(:IssueCountForLabel)
+      GitHubRepositoryLabelActiveCheck.const_set :IssueCountForLabel, client.parse(<<-GRAPHQL)
+        query($owner: String!, $name: String!, $label: String!) {
+          repository(owner: $owner, name: $name) {
+            label(name: $label) {
+              name
+              url
+              hasIssuesEnabled
+              forkCount
+              issues(states: OPEN, first: 1, orderBy: {field: UPDATED_AT, direction: DESC}) {
+                totalCount
+                nodes {
+                  number
+                  updatedAt
+                }
               }
             }
           }
+          rateLimit {
+            limit
+            cost
+            remaining
+            resetAt
+          }
         }
-        rateLimit {
-          limit
-          cost
-          remaining
-          resetAt
-        }
-      }
-    GRAPHQL
+      GRAPHQL
+    end
 
     client
   end
