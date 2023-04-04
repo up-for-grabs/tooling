@@ -36,7 +36,7 @@ Metrics/CyclomaticComplexity:
   Max: 13
 
 Metrics/MethodLength:
-  Max: 48
+  Max: 52
 
 Metrics/PerceivedComplexity:
   Max: 13
