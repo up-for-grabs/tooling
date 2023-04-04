@@ -15,7 +15,7 @@ class CommandLineValidator
     end
 
     if schemer.nil?
-      library_root = File.dirname(File.dirname(__dir__))
+      library_root = File.dirname(__dir__, 2)
       schema = Pathname.new("#{library_root}/schema.json")
       schemer = JSONSchemer.schema(schema)
     end
@@ -30,7 +30,7 @@ class CommandLineValidator
 
       success = false if errors.any?
 
-      results.store(p.relative_path, { errors: errors })
+      results.store(p.relative_path, { errors: })
     end
 
     directory_result = DirectoryValidator.validate(root)

@@ -18,7 +18,7 @@ module GitHubRepositoryLabelActiveCheck
     count = label.issues.total_count
     last_updated = (label.issues.nodes[0].updated_at if count.positive?)
 
-    { reason: 'found', name: label.name, url: label.url, count: count, fork_count: fork_count, last_updated: last_updated }
+    { reason: 'found', name: label.name, url: label.url, count:, fork_count:, last_updated: }
   end
 
   def self.run(project)
@@ -49,9 +49,9 @@ module GitHubRepositoryLabelActiveCheck
     yaml = project.read_yaml
     label = yaml['upforgrabs']['name']
 
-    variables = { owner: owner, name: name, label: label }
+    variables = { owner:, name:, label: }
 
-    parse(client.query(IssueCountForLabel, variables: variables))
+    parse(client.query(IssueCountForLabel, variables:))
   rescue StandardError => e
     { reason: 'error', error: e }
   end
@@ -79,7 +79,7 @@ module GitHubRepositoryLabelActiveCheck
 
     GraphQL::Client.dump_schema(http, 'graphql-schema.json') if ENV.fetch('WRITE_SCHEMA_TO_DISK', nil)
 
-    client = GraphQL::Client.new(schema: schema, execute: http)
+    client = GraphQL::Client.new(schema:, execute: http)
 
     GitHubRepositoryLabelActiveCheck.const_set :RateLimitQuery, client.parse(<<-GRAPHQL)
       {
