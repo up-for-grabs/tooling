@@ -18,7 +18,7 @@ class SchemaValidator
     return errors if errors.any?
 
     if schemer.nil?
-      library_root = File.dirname(File.dirname(__dir__))
+      library_root = File.dirname(__dir__, 2)
       schema = Pathname.new("#{library_root}/schema.json")
       schemer = JSONSchemer.schema(schema)
     end

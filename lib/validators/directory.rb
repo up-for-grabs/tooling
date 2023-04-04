@@ -36,8 +36,8 @@ class DirectoryValidator
     end
 
     {
-      project_files_at_root: project_files_at_root,
-      invalid_data_files: invalid_data_files
+      project_files_at_root:,
+      invalid_data_files:
     }
   end
 end
