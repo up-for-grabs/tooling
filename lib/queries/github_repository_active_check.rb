@@ -25,6 +25,8 @@ class GitHubRepositoryActiveCheck
 
     return { deprecated: true, reason: 'archived' } if repo.archived
 
+    return { deprecated: true, reason: 'issues-disabled' } unless repo.has_issues
+
     unless owner_and_repo.casecmp(repo.full_name).zero?
       return {
         deprecated: false,
