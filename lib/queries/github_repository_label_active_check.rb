@@ -95,11 +95,11 @@ module GitHubRepositoryLabelActiveCheck
       GitHubRepositoryLabelActiveCheck.const_set :IssueCountForLabel, client.parse(<<-GRAPHQL)
         query($owner: String!, $name: String!, $label: String!) {
           repository(owner: $owner, name: $name) {
+            hasIssuesEnabled
+            forkCount
             label(name: $label) {
               name
               url
-              hasIssuesEnabled
-              forkCount
               issues(states: OPEN, first: 1, orderBy: {field: UPDATED_AT, direction: DESC}) {
                 totalCount
                 nodes {
