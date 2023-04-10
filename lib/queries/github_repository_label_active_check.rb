@@ -51,7 +51,7 @@ module GitHubRepositoryLabelActiveCheck
 
     variables = { owner:, name:, label: }
 
-    parse(client.query(IssueCountForLabel, variables:))
+    parse(client.query(IssueCountForLabel, variables:), label)
   rescue StandardError => e
     { reason: 'error', error: e }
   end
