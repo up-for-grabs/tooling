@@ -2,7 +2,7 @@
 
 # Check using the GitHub API whether the label in a repository is active
 module GitHubRepositoryLabelActiveCheck
-  def self.parse(result)
+  def self.parse(result, label_name)
     repository = result.data.repository
 
     # we should be checking for repository existence before this, but flag it anyway
@@ -10,7 +10,7 @@ module GitHubRepositoryLabelActiveCheck
 
     return { reason: 'issues-disabled' } unless repository.has_issues_enabled
 
-    return { reason: 'missing' } if repository.label.nil?
+    return { reason: 'missing', name: label_name } if repository.label.nil?
 
     label = repository.label
     fork_count = repository.fork_count
