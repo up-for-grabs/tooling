@@ -161,6 +161,10 @@ class PullRequestValidator
              "Please confirm this is correct or hasn't been mis-typed."
     end
 
+    if result[:reason] == 'missing'
+      return "I couldn't find the label that was used in the `upforgrabs.link` value: '#{result[:name]}'. Please update the configuration to match the right label in this repository."
+    end
+
     yaml = project.read_yaml
     label = yaml['upforgrabs']['name']
 
