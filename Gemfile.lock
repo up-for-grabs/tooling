@@ -40,7 +40,7 @@ GEM
       regexp_parser (~> 2.0)
       uri_template (~> 0.7)
     minitest (5.18.1)
-    mocha (2.0.2)
+    mocha (2.0.4)
       ruby2_keywords (>= 0.0.5)
     octokit (6.1.1)
       faraday (>= 1, < 3)
