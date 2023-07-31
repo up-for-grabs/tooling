@@ -38,7 +38,7 @@ class CommandLineValidatorTests < Minitest::Test
 
     assert_equal 2, result[:projects].count
 
-    project_with_errors =  result[:projects]['_data/projects/error_site_link_url.yml']
+    project_with_errors = result[:projects]['_data/projects/error_site_link_url.yml']
 
     errors = project_with_errors[:errors]
 
