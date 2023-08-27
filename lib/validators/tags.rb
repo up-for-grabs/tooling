@@ -22,6 +22,8 @@ class TagsValidator
 
   # preference is a map of [bad tag]: [preferred tag]
   PREFERENCES = {
+    '.net6' => '.net-core',
+    '.netcore' => '.net-core',
     'algorithms' => 'algorithm',
     'appletv' => 'apple-tv',
     'asp-net' => 'asp.net',
@@ -30,6 +32,8 @@ class TagsValidator
     'aspnetcore' => 'aspnet-core',
     'asp-net-core' => 'aspnet-core',
     'assembler' => 'assembly',
+    'beginner-firendly' => 'beginner-friendly',
+    'beginners' => 'beginner',
     'builds' => 'build',
     'collaborate' => 'collaboration',
     'coding' => 'code',
@@ -48,6 +52,7 @@ class TagsValidator
     'library' => 'libraries',
     'linters' => 'linter',
     'node' => 'node.js',
+    'node-js' => 'node.js',
     'nodejs' => 'node.js',
     'nuget.exe' => 'nuget',
     'parser' => 'parsing',
