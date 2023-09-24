@@ -16,6 +16,11 @@ module GitHubRepositoryLabelActiveCheck
     fork_count = repository.fork_count
 
     count = label.issues.total_count
+
+    puts "found issue count for #{label_name}: #{count}"
+    puts "found issues: #{label.issues.inspect}"
+    puts "found nodes: #{label.issues.nodes.inspect}"
+
     last_updated = (label.issues.nodes[0].updated_at if count.positive?)
 
     { reason: 'found', name: label.name, url: label.url, count:, fork_count:, last_updated: }
