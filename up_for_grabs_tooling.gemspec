@@ -15,6 +15,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'safe_yaml', '~> 1.0'
   s.add_runtime_dependency 'octokit', '>= 5.6', '< 9.0'
   s.add_runtime_dependency 'graphql-client', '~> 0.18'
-  s.add_runtime_dependency 'graphql', '~> 2.0.27'
+  s.add_runtime_dependency 'graphql', '>= 2.0.27', '< 2.2.0'
   s.add_runtime_dependency 'json_schemer', '>= 0.2', '< 3.0'
 end
