@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     up_for_grabs_tooling (0.2.0)
-      graphql (~> 2.0.27)
+      graphql (>= 2.0.27, < 2.3.0)
       graphql-client (~> 0.18)
       json_schemer (>= 0.2, < 3.0)
       octokit (>= 5.6, < 9.0)
@@ -35,7 +35,8 @@ GEM
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
       net-http
-    graphql (2.0.28)
+    graphql (2.2.14)
+      base64
     graphql-client (0.20.0)
       activesupport (>= 3.0)
       graphql (>= 1.13.0)
