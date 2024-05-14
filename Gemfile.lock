@@ -36,7 +36,7 @@ GEM
       net-http
     graphql (2.0.29)
       base64
-    graphql-client (0.21.0)
+    graphql-client (0.22.0)
       activesupport (>= 3.0)
       graphql (>= 1.13.0)
     hana (1.3.7)
