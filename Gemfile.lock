@@ -55,7 +55,7 @@ GEM
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
     minitest (5.25.1)
-    mocha (2.4.5)
+    mocha (2.5.0)
       ruby2_keywords (>= 0.0.5)
     mutex_m (0.2.0)
     net-http (0.4.1)
