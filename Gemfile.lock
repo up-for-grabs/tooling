@@ -59,7 +59,7 @@ GEM
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
     minitest (5.25.2)
-    mocha (2.5.0)
+    mocha (2.6.0)
       ruby2_keywords (>= 0.0.5)
     net-http (0.4.1)
       uri
