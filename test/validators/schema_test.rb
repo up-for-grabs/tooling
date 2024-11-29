@@ -56,7 +56,7 @@ class SchemaValidatorTests < Minitest::Test
 
     result = SchemaValidator.validate(project)
 
-    assert_equal("Tag 'Web' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -", result[0])
+    assert_equal("Tag 'Web' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -. Spaces are not allowed.", result[0])
   end
 
   def test_site_link_url_error

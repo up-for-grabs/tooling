@@ -39,7 +39,7 @@ class SchemaValidator
     type = err.fetch('type')
 
     if field.start_with?('/tags/')
-      "Tag '#{value}' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -"
+      "Tag '#{value}' contains invalid characters. Allowed characters: a-z, 0-9, +, #, . or -. Spaces are not allowed."
     elsif field.start_with?('/site') || field.start_with?('/upforgrabs/link')
       "Field '#{field}' expects a URL but instead found '#{value}'. Please check and update this value."
     elsif field.start_with?('/stats/last-updated')
