@@ -58,7 +58,7 @@ GEM
       simpleidn (~> 0.2)
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
-    minitest (5.25.2)
+    minitest (5.25.4)
     mocha (2.6.1)
       ruby2_keywords (>= 0.0.5)
     net-http (0.5.0)
