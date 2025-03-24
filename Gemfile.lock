@@ -41,7 +41,7 @@ GEM
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
     fiber-storage (1.0.0)
-    graphql (2.4.13)
+    graphql (2.4.15)
       base64
       fiber-storage
       logger
