@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     up_for_grabs_tooling (0.2.0)
-      graphql (>= 2.1.12, < 2.5.0)
+      graphql (>= 2.1.12, < 2.6.0)
       graphql-client (~> 0.18)
       json_schemer (>= 0.2, < 3.0)
       octokit (>= 5.6, < 11.0)
@@ -40,8 +40,8 @@ GEM
       logger
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    fiber-storage (1.0.0)
-    graphql (2.4.13)
+    fiber-storage (1.0.1)
+    graphql (2.5.5)
       base64
       fiber-storage
       logger
