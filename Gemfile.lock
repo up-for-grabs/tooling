@@ -61,7 +61,7 @@ GEM
     logger (1.7.0)
     minitest (6.0.1)
       prism (~> 1.5)
-    mocha (2.8.2)
+    mocha (3.0.1)
       ruby2_keywords (>= 0.0.5)
     net-http (0.6.0)
       uri
