@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '~> 3.3'
+ruby '~> 4.0'
 
 gem 'minitest', group: :test
 gem 'simplecov', require: false, group: :test
