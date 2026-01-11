@@ -18,7 +18,7 @@ module GitHubRepositoryLabelActiveCheck
     count = label.issues.total_count
     last_updated = (label.issues.nodes[0].updated_at if count.positive?)
 
-    { reason: 'found', name: label.name, url: label.url, count:, fork_count:, last_updated: }
+    { reason: 'found', repository_url: repository.url, name: label.name, url: label.url, count:, fork_count:, last_updated: }
   end
 
   def self.run(project)
@@ -98,6 +98,7 @@ module GitHubRepositoryLabelActiveCheck
           repository(owner: $owner, name: $name) {
             hasIssuesEnabled
             forkCount
+            url
             label(name: $label) {
               name
               url
