@@ -137,7 +137,8 @@ class PullRequestValidator
     end
 
     if result[:reason] == 'error'
-      return "The GitHub repository '#{project.github_owner_name_pair}' could not be confirmed. Error details: #{result[:error]}"
+      return "The GitHub repository '#{project.github_owner_name_pair}' could not be confirmed. " \
+             "Please verify the repository exists and that the `upforgrabs.link` value in `#{project.relative_path}` is correct."
     end
 
     nil
@@ -153,7 +154,8 @@ class PullRequestValidator
     end
 
     if result[:reason] == 'error'
-      return "An error occurred while querying for the project label. Details: #{result[:error]}"
+      return "An error occurred while querying for the project label for '#{project.github_owner_name_pair}'. " \
+             "Please verify the `upforgrabs.name` and `upforgrabs.link` values in `#{project.relative_path}`."
     end
 
     if result[:reason] == 'repository-missing'

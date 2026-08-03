@@ -124,6 +124,26 @@ class PullRequestValidatorTests < Minitest::Test
     assert_markdown 'one-file-label-error', message
   end
 
+  def test_one_file_with_label_query_error
+    dir = get_test_directory('one-file-label-query-error')
+    files = get_files_in_directory('one-file-label-query-error')
+
+    GitHubRepositoryActiveCheck
+      .expects(:run)
+      .returns({})
+
+    GitHubRepositoryLabelActiveCheck
+      .expects(:run)
+      .returns({
+                 reason: 'error',
+                 error: RuntimeError.new('some API error')
+               })
+
+    message = PullRequestValidator.generate_comment(dir, files)
+
+    assert_markdown 'one-file-label-query-error', message
+  end
+
   def test_two_files_with_no_problems_lists_both_files
     dir = get_test_directory('two-valid-files')
     files = get_files_in_directory('two-valid-files')
