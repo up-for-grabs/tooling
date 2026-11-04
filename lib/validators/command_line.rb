@@ -5,7 +5,8 @@
 #
 #  - schema validation for all current projects
 #  - tag validation
-#  - directory structure validation
+#  - directory structure validation, including project files whose names
+#    differ only by case
 #
 class CommandLineValidator
   def self.validate(root, schemer = nil)
@@ -41,6 +42,7 @@ class CommandLineValidator
 
     success = false if directory_result[:project_files_at_root].any?
     success = false if directory_result[:invalid_data_files].any?
+    success = false if directory_result[:case_conflicting_files].any?
 
     result[:success] = success
 
