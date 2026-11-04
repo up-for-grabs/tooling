@@ -85,4 +85,20 @@ class CommandLineFormatterTests < Minitest::Test
     assert_match %r{  - _data/projects/fourth.xml}, out
     assert_match(/Remove these from the repository as they will not be used by the site/, out)
   end
+
+  def test_command_line_lists_case_conflicting_files
+    result = {
+      case_conflicting_files: [
+        ['_data/projects/Crop-System.yml', '_data/projects/crop-system.yml']
+      ]
+    }
+
+    out, = capture_io do
+      CommandLineFormatter.output(result)
+    end
+
+    assert_match(/2 project files have names that differ only by case:/, out)
+    assert_match %r{  - _data/projects/Crop-System.yml, _data/projects/crop-system.yml}, out
+    assert_match(/Rename or remove files so each name is unique ignoring case/, out)
+  end
 end

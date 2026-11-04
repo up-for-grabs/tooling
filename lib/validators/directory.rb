@@ -8,6 +8,7 @@ class DirectoryValidator
 
   def self.validate(root)
     invalid_data_files = []
+    data_files = []
 
     projects_dir = File.join(root, '_data', 'projects')
 
@@ -16,6 +17,7 @@ class DirectoryValidator
 
       relative_path = Pathname.new(path).relative_path_from(root).to_s
 
+      data_files << relative_path
       invalid_data_files << relative_path unless ALLOWED_EXTENSIONS.include? File.extname(path)
     end
 
@@ -37,7 +39,14 @@ class DirectoryValidator
 
     {
       project_files_at_root:,
-      invalid_data_files:
+      invalid_data_files:,
+      case_conflicting_files: case_conflicts(data_files)
     }
+  end
+
+  # Groups of paths that differ only by case. A case-insensitive filesystem
+  # (Windows, macOS by default) can only check out one file of each group.
+  def self.case_conflicts(paths)
+    paths.group_by(&:downcase).values.select { |group| group.length > 1 }.map(&:sort).sort
   end
 end
