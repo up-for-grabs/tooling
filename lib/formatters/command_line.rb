@@ -4,21 +4,10 @@
 # the command line, and will emit results to the terminal using `puts`
 module CommandLineFormatter
   def self.output(result)
-    project_files_at_root = result[:project_files_at_root] || []
+    directory_problems = directory_problem_lines(result)
 
-    if project_files_at_root.any?
-      puts "#{project_files_at_root.length} files found in root which look like project files:"
-      project_files_at_root.each { |f| puts "  - #{f}" }
-      puts 'Move these inside _data/projects/ to ensure they are listed on the site'
-      return
-    end
-
-    invalid_data_files = result[:invalid_data_files] || []
-
-    if invalid_data_files.any?
-      puts "#{invalid_data_files.length} files found in projects directory which are not YAML files:"
-      invalid_data_files.each { |f| puts "  - #{f}" }
-      puts 'Remove these from the repository as they will not be used by the site'
+    if directory_problems.any?
+      directory_problems.each { |line| puts line }
       return
     end
 
@@ -37,5 +26,39 @@ module CommandLineFormatter
       puts "  - #{key}:"
       value[:errors].each { |error| puts "    - #{error}" }
     end
+  end
+
+  # The lines describing the first problem found in the directory layout, or
+  # none when it is fine.
+  def self.directory_problem_lines(result)
+    [
+      root_file_lines(result[:project_files_at_root] || []),
+      invalid_data_file_lines(result[:invalid_data_files] || []),
+      case_conflict_lines(result[:case_conflicting_files] || [])
+    ].find(&:any?) || []
+  end
+
+  def self.root_file_lines(files)
+    return [] if files.empty?
+
+    ["#{files.length} files found in root which look like project files:",
+     *files.map { |f| "  - #{f}" },
+     'Move these inside _data/projects/ to ensure they are listed on the site']
+  end
+
+  def self.invalid_data_file_lines(files)
+    return [] if files.empty?
+
+    ["#{files.length} files found in projects directory which are not YAML files:",
+     *files.map { |f| "  - #{f}" },
+     'Remove these from the repository as they will not be used by the site']
+  end
+
+  def self.case_conflict_lines(groups)
+    return [] if groups.empty?
+
+    ["#{groups.flatten.length} project files have names that differ only by case:",
+     *groups.map { |group| "  - #{group.join(', ')}" },
+     'Rename or remove files so each name is unique ignoring case, as Windows and macOS checkouts cannot hold them all']
   end
 end
